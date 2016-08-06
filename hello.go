@@ -14,5 +14,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "２回目")
 }
 func te(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "kame")
+	fmt.Fprint(w, "kameaaa")
 }
