@@ -1,0 +1,38 @@
+{
+  "name": "chaap",
+  "version": "0.1.0",
+  "description": "naisho",
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "react": "^0.13.2",
+    "react-bootstrap": "^0.21.1",
+    "react-document-title": "^1.0.2",
+    "react-router": "^0.13.3",
+    "react-tappable": "^0.5.0-beta.3"
+  },
+  "devDependencies": {
+    "babelify": "^6.0.2",
+    "bootstrap-styl": "^4.0.4",
+    "browserify": "^10.0.0",
+    "npm-run-all": "^1.2.4",
+    "stylus": "^0.51.1",
+    "uglify-js": "^2.4.20",
+    "uglifycss": "0.0.15",
+    "watchify": "^3.2.1"
+  },
+  "scripts": {
+    "start": "npm-run-all -p watch-js watch-stylus",
+    "watch-js": "watchify -o src/bundle.js -v -d src/index.js",
+    "watch-stylus": "stylus src/styles/ -w -o src/styles/bundle.css",
+    "build": "npm-run-all -p minify-js minify-css",
+    "minify-js": "uglifyjs --compress --mangle --output dist/bundle.js -- src/bundle.js ",
+    "minify-css": "uglifycss src/styles/bundle.css > dist/styles/bundle.css"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "author": "NekoKuma",
+  "license": "MIT"
+}
