@@ -4,7 +4,7 @@
   "description": "naisho",
   "main": "index.js",
   "scripts": {
-    "test": "a"
+    "dep": "goapp deploy app/app.yaml"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
   "dependencies": {
     "react": "^15.3.0",
     "react-router": "^2.6.1"
+  },
+  "devDependencies": {
+    "npm-run-all": "^2.3.0"
   }
 }
