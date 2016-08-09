@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dep": "goapp deploy app/app.yaml",
-    "watch-js": "watchify -o src/bundle.js -v -d src/index.js"
+    "build": "npm-run-all -p minify:*",
+    "dev": "npm-run-all -p watch:*",
+    "watch:js": "watchify -o src/bundle.js -v -d src/index.js",
+    "minify:js": "uglifyjs --compress --mangle --output dist/bundle.js -- src/bundle.js "
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
     "browserify": "^13.1.0",
     "npm-run-all": "^2.3.0",
     "riotify": "^1.0.1",
+    "uglify-js": "^2.7.0",
     "watchify": "^3.7.0"
   },
   "dependencies": {
