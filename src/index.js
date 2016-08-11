@@ -1,5 +1,5 @@
 var riot = require('riot')
-var kame = require('./test.tag')
+var main = require('./tags/main.tag')
 
 
-riot.mount('kame')
+riot.mount('main')
