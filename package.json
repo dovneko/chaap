@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dep": "goapp deploy app/app.yaml",
-    "build": "npm-run-all -p minify:*",
-    "dev": "npm-run-all -p watch:*",
-    "watch:js": "watchify -o src/bundle.js -v -d src/index.js",
-    "minify:js": "uglifyjs --compress --mangle --output dist/bundle.js -- src/bundle.js "
+    "g": "gulp"
   },
   "repository": {
     "type": "git",
@@ -24,23 +21,14 @@
   },
   "homepage": "https://github.com/dovneko/chaap#readme",
   "devDependencies": {
+    "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
-    "npm-run-all": "^2.3.0",
+    "gulp": "^3.9.1",
     "riotify": "^1.0.1",
-    "uglify-js": "^2.7.0",
-    "watchify": "^3.7.0"
+    "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "babel-core": "^6.13.2",
     "riot": "^2.5.0"
-  },
-  "browserify": {
-    "transform": [
-      [
-        "riotify",
-        {
-          "type": "es6"
-        }
-      ]
-    ]
   }
 }
