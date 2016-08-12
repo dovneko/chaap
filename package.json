@@ -4,7 +4,7 @@
   "description": "naisho",
   "main": "index.js",
   "scripts": {
-    "dep": "goapp deploy app/app.yaml",
+    "dep": "gulp dep",
     "g": "gulp"
   },
   "repository": {

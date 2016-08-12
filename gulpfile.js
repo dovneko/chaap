@@ -9,6 +9,7 @@ var stylus = require('gulp-stylus');
 var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
+
 var bootstrap = require('bootstrap-styl');
 
 var handleErrors = function() {
@@ -19,6 +20,20 @@ var handleErrors = function() {
   }).apply(this, args);
   this.emit('end');
 }; 
+
+// -----------------------------------------------------------------------
+// gae deploy
+var exec = require('child_process').exec;
+
+gulp.task('dep',['concat','styl'],function () {
+  gulp.src("./dest/index.html").pipe(gulp.dest("./app/template"));
+  gulp.src("./dest/bundle.*").pipe(gulp.dest("./app/static"));
+  exec('goapp deploy app/app.yaml', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+  });
+});
+// -----------------------------------------------------------------------
 
 gulp.task('server', function () {
   browsersync.init({
