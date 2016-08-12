@@ -6,7 +6,7 @@
   "scripts": {
     "dep": "gulp dep",
     "start": "gulp develop",
-    "g":"gulp"
+    "g": "gulp"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   "dependencies": {
     "bootstrap-styl": "^5.0.7",
     "riot": "^2.5.0",
-    "riot-router": "^0.8.0"
+    "riot-router": "^0.8.0",
+    "riotcontrol": "0.0.3"
   }
 }
