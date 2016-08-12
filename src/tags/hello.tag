@@ -1,3 +1,3 @@
 <hello>
-  <p>hello</p>
+  <p>hello { opts.zz } </p>
 </hello>

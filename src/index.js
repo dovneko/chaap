@@ -13,12 +13,13 @@ var Route = riot.router.Route;
     RedirectRoute = riot.router.RedirectRoute;
 
 riot.router.routes([
-    new Route({tag: 'hello'}),
+    new Route({path:'/hehehe/:zz',tag: 'hello'}),
     new DefaultRoute({tag: 'home'}),
-    new RedirectRoute({from: 'h', to: 'hello'}),
+    new RedirectRoute({from: 'x', to: 'hehehe'}),
     new NotFoundRoute({tag: 'not-found'})
 ]);
 
 
 riot.mount('*');
 riot.router.start();
+
