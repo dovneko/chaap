@@ -8,11 +8,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Chaap</a>
+                <a class="navbar-brand" href="/#/">Chaap</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li each={links} class={active:act}><a href="#/hehehe/{name}">{name}</a></li>
+                    <li each={links} class={active:act}><a href="/#/hehehe/{name}">{name}</a></li>
                 </ul>
             </div>
         </div>
