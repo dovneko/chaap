@@ -63,14 +63,14 @@ gulp.task('styl', function () {
     .pipe(plumber({errorHandler: notify.onError('<%= error.message %>')}))
     .pipe(stylus({
       // import:['bootstrap'], //@importが不要になる
-      use:[bootstrap()],
+      use:[bootstrap()], //これがないと@import bootstrapが超絶エラーになる
       compress: true
     }))
     .pipe(rename('bundle.css'))
     .pipe(gulp.dest('./dest'));
 });
 
-gulp.task('default', ['server'], function() {
+gulp.task('develop', ['server'], function() {
   gulp.watch("./dest/*", function() {
     browsersync.reload();
   });

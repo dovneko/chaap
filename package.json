@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dep": "gulp dep",
-    "g": "gulp"
+    "start": "gulp develop",
+    "g":"gulp"
   },
   "repository": {
     "type": "git",
