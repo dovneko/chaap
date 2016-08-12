@@ -52,7 +52,7 @@ gulp.task('styl', function () {
       compress: true
     }))
     .pipe(rename('bundle.css'))
-    .pipe(gulp.dest('./dest/styles'));
+    .pipe(gulp.dest('./dest'));
 });
 
 gulp.task('default', ['server'], function() {
