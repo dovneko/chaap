@@ -1,3 +1,3 @@
 <not-found>
-  <p>404　ありませんgo</p>
+  <p>404</p>
 </not-found>

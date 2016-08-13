@@ -46,7 +46,8 @@ gulp.task('concat', function () {
   return browserify({
     debug: true,
     entries: ['./src/index.js']
-  }).transform([riotify])
+  })
+    .transform(['riotify'])
     .bundle()
     .on('error', handleErrors)
     // take the end result and place it to dist folder
