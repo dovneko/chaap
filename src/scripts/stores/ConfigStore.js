@@ -1,6 +1,6 @@
 var riot = require('riot');
-
 var RiotControl = require('riotcontrol');
+var ActionType = require('../constants/ActionType.js');
 
 
 var ConfigStore = function (){
@@ -9,11 +9,10 @@ var ConfigStore = function (){
     var self = this;
     self.test = 'kame';
 
-    self.setTest = function(val){
+    self.on(ActionType.Config.SetName,function(val){
         self.test = val;
-        self.trigger(self.Action.Changed);
-    };
-
+        self.trigger(self.Action.Changed, val);
+    });
 
     self.Action = {Changed:"ConfigStore_Value_Changed"};
 }
