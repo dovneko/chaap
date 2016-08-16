@@ -44,16 +44,15 @@ gulp.task('server', function () {
 
 gulp.task('concat', function () {
   return browserify({
-    debug: true,
+    debug: false,
     entries: ['./src/index.js']
   })
     .transform(['riotify'])
     .bundle()
     .on('error', handleErrors)
-    // take the end result and place it to dist folder
     .pipe(source('bundle.js'))
-    // .pipe(buffer())
-    // .pipe(uglify({preserveComments: 'some'}))
+    .pipe(buffer())
+    .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest('./dest/'))
     .pipe(browsersync.stream());
 });
