@@ -2,15 +2,15 @@
     <menubar></menubar>
     <h1>Home<span class="glyphicon glyphicon-flash" aria-hidden="true"></span></h1>
     <p>{test}</p>
-    <p>End</p>
     <form onsubmit={ add }>
         <input name="input" onkeyup={ edit } />
         <button class="btn btn-primary" disabled={ !text }>Change</button>
     </form>
 
-    var ConfigStore = require('../scripts/stores/ConfigStore.js');
     var RiotControl = require('riotcontrol');
-    var ConfigAction = require('../scripts/actions/ConfigAction.js');
+    var ConfigStore = require('../scripts/stores/ConfigStore');
+    var SampleAction = require('../scripts/actions/SampleAction');
+
 
     this.disabled = true;
 
@@ -27,7 +27,7 @@
 
     add(e) {
       if (this.text) {
-        ConfigAction.SetName(this.input.value);
+        SampleAction.SetName(this.input.value);
         this.text = this.input.value = '';
       }
     } 

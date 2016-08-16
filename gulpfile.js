@@ -52,8 +52,8 @@ gulp.task('concat', function () {
     .on('error', handleErrors)
     // take the end result and place it to dist folder
     .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(uglify({preserveComments: 'some'}))
+    // .pipe(buffer())
+    // .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest('./dest/'))
     .pipe(browsersync.stream());
 });
@@ -71,7 +71,7 @@ gulp.task('styl', function () {
     .pipe(gulp.dest('./dest'));
 });
 
-gulp.task('develop', ['server'], function() {
+gulp.task('develop', ['styl','concat','server'], function() {
   gulp.watch("./dest/*", function() {
     browsersync.reload();
   });

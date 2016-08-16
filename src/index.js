@@ -1,3 +1,9 @@
+// require2 = function(a){
+//     console.log(a);
+//     console.log(__dirname);
+//     return require(__dirname + a);
+// };
+
 var riot = require('riot');
 require('riot-router');
 
