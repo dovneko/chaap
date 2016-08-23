@@ -52,8 +52,8 @@ gulp.task('concat', function () {
     .on('error', handleErrors)
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(uglify({preserveComments: 'some'}))
-    .pipe(gulp.dest('./dest/'))
+    // .pipe(uglify({preserveComments: 'some'}))
+    // .pipe(gulp.dest('./dest/'))
     .pipe(browsersync.stream());
 });
 

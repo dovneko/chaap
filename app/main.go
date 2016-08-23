@@ -42,7 +42,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	u := user.Current(ctx)
 	if u == nil {
-		url, _ := user.LoginURL(ctx, "/")
+		url, _ := user.LoginURL(ctx, "/#/hehehe/kame")
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
