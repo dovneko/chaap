@@ -51,9 +51,9 @@ gulp.task('concat', function () {
     .bundle()
     .on('error', handleErrors)
     .pipe(source('bundle.js'))
-    .pipe(buffer())
+    // .pipe(buffer())
     // .pipe(uglify({preserveComments: 'some'}))
-    // .pipe(gulp.dest('./dest/'))
+    .pipe(gulp.dest('./dest/'))
     .pipe(browsersync.stream());
 });
 

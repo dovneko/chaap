@@ -1,2 +1,2793 @@
-!function t(e,n,r){function o(a,u){if(!n[a]){if(!e[a]){var s="function"==typeof require&&require;if(!u&&s)return s(a,!0);if(i)return i(a,!0);var c=new Error("Cannot find module '"+a+"'");throw c.code="MODULE_NOT_FOUND",c}var f=n[a]={exports:{}};e[a][0].call(f.exports,function(t){var n=e[a][1][t];return o(n?n:t)},f,f.exports,t,e,n,r)}return n[a].exports}for(var i="function"==typeof require&&require,a=0;a<r.length;a++)o(r[a]);return o}({1:[function(t,e,n){!function(r,o){"object"==typeof n&&"object"==typeof e?e.exports=o(t("riot")):"function"==typeof define&&define.amd?define(["riot"],o):"object"==typeof n?n.Router=o(t("riot")):r.Router=o(r.riot)}(this,function(t){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){var r,o,i;!function(a,u){o=[t,n(1),n(2)],r=u,i="function"==typeof r?r.apply(e,o):r,!(void 0!==i&&(t.exports=i))}(this,function(t,e,n){"use strict";function r(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function o(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function a(t){var e=t.split("?"),n=e[0].split("/"),r=e[1],o={};return r&&r.split("&").forEach(function(t){var e=t.split("=");o[e[0]]=e[1]}),n.push(o),n}var u=function(){function t(t,e){var n=[],r=!0,o=!1,i=void 0;try{for(var a,u=t[Symbol.iterator]();!(r=(a=u.next()).done)&&(n.push(a.value),!e||n.length!==e);r=!0);}catch(t){o=!0,i=t}finally{try{!r&&u.return&&u.return()}finally{if(o)throw i}}return n}return function(e,n){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return t(e,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),s=function t(e,n,r){null===e&&(e=Function.prototype);var o=Object.getOwnPropertyDescriptor(e,n);if(void 0===o){var i=Object.getPrototypeOf(e);return null===i?void 0:t(i,n,r)}if("value"in o)return o.value;var a=o.get;return void 0!==a?a.call(r):void 0},c=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),f=console&&console.error||function(){},l=function(){function t(){i(this,t),e.router=this,e.observable(this),this.interceptors=[this.processRoute.bind(this)],this.handler=new g,this.current=new p("").response,this.process=this.process.bind(this)}return c(t,[{key:"route",value:function(t){this.handler=t}},{key:"routes",value:function(t){this.route((new g).routes(t))}},{key:"use",value:function(t){this.interceptors.push(t)}},{key:"process",value:function(){var t=Array.prototype.slice.call(arguments),e={},n=t.filter(function(t){return"string"==typeof t||(e=t,!1)}).join("/");"/"!==n[0]&&(n="/"+n);var r=new p(new x(n,e));return this.rootContext||(this.rootContext=r),this.processRequest(r),r}},{key:"processRequest",value:function(t){return this.processInterceptors(t),this.processResponse(t)}},{key:"processResponse",value:function(t){if(this.isRedirect(t))return this.processRedirect(t);var e=(t.request,t.response);return e.redirectTo?void 0:(this.current=e,this.rootContext=null,this.trigger("route:updated",e),t)}},{key:"isRedirect",value:function(t){return!!t.response.redirectTo}},{key:"processRedirect",value:function(t){var e=t.response.redirectTo;this.rootContext.addRedirect(e),this.navigateTo(e)}},{key:"navigateTo",value:function(t){e.route(t)}},{key:"processInterceptors",value:function(t,e,n){var r=(e||[]).concat(this.interceptors).concat(n||[]),o=function e(){if(!t.stop){var n=r.shift(),o=t.request,i=t.response;if(n)return n(o,i,e,t)}return t};return o()}},{key:"processRoute",value:function(t,e,n,r){return this.handler.process(t,e,r),n()}},{key:"start",value:function(){e.route.parser(a),e.route(this.process),e.route.start(),this.exec()}},{key:"exec",value:function(){e.route.exec(this.process)}}]),t}(),p=function(){function t(e){i(this,t),this.request="string"==typeof e?new x(e):e,this.response=new w(this.request),this.redirectStack=[]}return c(t,[{key:"addRedirect",value:function(t){if(this.redirectStack.indexOf(t)>-1)throw new Error("Cyclic redirection to "+t+". Stack = "+this.redirectStack);this.redirectStack.push(t)}}]),t}(),h=function(){function t(){i(this,t)}return c(t,[{key:"matches",value:function(t){return!1}},{key:"process",value:function(t,e){var n=this.matches(t);return n?this.routeMatch(t,e,n):this.routeMiss(t,e)}},{key:"routeMatch",value:function(t,e,n){return e.add(n),!0}},{key:"routeMiss",value:function(t,e){return!1}},{key:"processRoutes",value:function(t,e,n){if(n&&n.length){for(var r=n.length,o=0;o<r;o++){var i=n[o];if(i.process(t,e))return!0}return!1}}},{key:"createRequest",value:function(t,e){return new v(t,e)}}]),t}(),d=function(t){function e(t){i(this,e);var n=r(this,Object.getPrototypeOf(e).call(this,t));t=t||{},n.tag=t.tag,n.api=t.api,n.path=t.path,n.name=t.name,n.updatable=t.updatable,n.pathParameterNames=[];var o=n.getPath().replace(/^\//,"");return n.pattern="^/?"+o.replace(/:([^\/]+)/g,function(t,e){return this.pathParameterNames.push(e),"([^/]+)"}.bind(n))+"(:?/|$)",n.regex=new RegExp(n.pattern),n}return o(e,t),c(e,[{key:"routes",value:function(t){var e=t.filter(function(t){return t instanceof y}),n=t.filter(function(t){return t instanceof b}),r=t.filter(function(t){return t instanceof m}),o=t.filter(function(t){return e.indexOf(t)===-1&&n.indexOf(t)===-1&&r.indexOf(t)===-1});return r.length>1&&f("Can't use more than one NotFoundRoute per route. --> "+this.getPath()),n.length>1&&f("Can't use more than one DefaultRoute per route. --> "+this.getPath()),this._routes=[].concat(e).concat(o).concat(n).concat(r),this}},{key:"matches",value:function(t){var e=this.regex.exec(t.uri);if(e){var n={};for(var r in this.pathParameterNames)if(this.pathParameterNames.hasOwnProperty(r)){var o=this.pathParameterNames[r];n[o]=decodeURIComponent(e[parseInt(r,10)+1])}return{route:this,tag:this.tag,api:this.api,found:e[0],params:n}}return!1}},{key:"routeMatch",value:function(t,n,r){var o=s(Object.getPrototypeOf(e.prototype),"routeMatch",this).call(this,t,n,r);return this.processRoutes(t,n,r),o}},{key:"processRoutes",value:function(t,n,r){return s(Object.getPrototypeOf(e.prototype),"processRoutes",this).call(this,this.createRequest(t,r),n,this._routes)}},{key:"getPath",value:function(){return this.name||this.path||("string"==typeof this.tag?this.tag:"")}}]),e}(h),g=function(t){function e(){return i(this,e),r(this,Object.getPrototypeOf(e).apply(this,arguments))}return o(e,t),e}(d),v=function t(e,n){i(this,t),this.request=e,this.matcher=n,this.uri=this.request.uri.substring(n.found.length),this.parentUri=this.request.uri.substring(0,n.found.length),this.query=this.request.query},m=function(t){function e(t){i(this,e);var n=r(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},n.tag=t.tag,n.api=t.api,n}return o(e,t),c(e,[{key:"matches",value:function(t){return{route:this,tag:this.tag,api:this.api,found:t.uri}}}]),e}(h),y=function(t){function e(t){i(this,e);var n=r(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},n.from=t.from,n.to=t.to,n.pattern="(^/?)"+n.from+"(/|$)",n.regex=new RegExp(n.pattern),n}return o(e,t),c(e,[{key:"process",value:function(t,e){var n=t.uri.replace(this.regex,"$1"+this.to+"$2");if(n!==t.uri){var r=t.parentUri||"";return e.redirectTo=r+n,!0}}}]),e}(h),b=function(t){function e(t){i(this,e);var n=r(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},n.tag=t.tag,n.api=t.api,n}return o(e,t),c(e,[{key:"matches",value:function(t){var e=t.uri.trim();if("/"===e||""===e)return{route:this,tag:this.tag,api:this.api,found:e}}}]),e}(h),x=function t(e,n){i(this,t),this.uri=e,this.query=n},w=function(){function t(e){i(this,t),this.uri=e.uri,this.matches=[],this.params={},this.query=e.query}return c(t,[{key:"add",value:function(t){this.matches.push(t);var e=t.params;if(e)for(var n in e)e.hasOwnProperty(n)&&(this.params[n]=e[n])}},{key:"get",value:function(t){return this.matches[t]}},{key:"size",value:function(){return this.matches.length}},{key:"isEmpty",value:function(){return this.matches.length}}]),t}();e.tag("route","<router-content></router-content>",function(t){this.calculateLevel=function(t){var e=0;return t.parent&&(e+=this.calculateLevel(t.parent)),t.opts.__router_level&&(e+=t.opts.__router_level),t.__router_tag&&(e+=1),e}.bind(this),this.normalizeTag=function(t,e,n){var r=t(e,n);return"string"==typeof r?t=r:(t=r.tag||t,e=r.api||e),[t,e,n]},this.unmountTag=function(){this.instance&&this.instance.unmount(!0)},this.mountTag=function(t,n,r){if("function"==typeof t){var o=this.normalizeTag(t,n,r),i=u(o,3);t=i[0],n=i[1],r=i[2]}this.canUpdate(t,n,r)?this.instance.update(n):(this.unmountTag(),t&&(this.root.replaceChild(document.createElement(t),this.root.children[0]),this.instance=e.mount(this.root.children[0],t,n)[0],this.instanceTag=t,this.instanceApi=n))},this.canUpdate=function(n,r,o){return!!((e.router.config.updatable||t.updatable||o.updatable)&&this.instance&&this.instance.isMounted&&this.instanceTag===n)},this.updateRoute=function(){var r={tag:null};if(e.router&&e.router.current){var o=e.router.current;if(this.level<=o.size()){var i=o.get(this.level);if(i){var a=i.params||{},u=o.query||{},s=n(!0,{},t,u,i.api,a,{__router_level:this.level,query:u});r={tag:i.tag,api:s,updatable:i.route.updatable}}}}r.tag?this.mountTag(r.tag,r.api,r):this.unmountTag()}.bind(this),this.__router_tag="route",this.level=this.calculateLevel(this),e.router.on("route:updated",this.updateRoute),this.on("unmount",function(){e.router.off("route:updated",this.updateRoute),this.unmountTag()}.bind(this)),this.on("mount",function(){this.updateRoute()}.bind(this))});var _=new l;_.Route=d,_.DefaultRoute=b,_.RedirectRoute=y,_.NotFoundRoute=m,_._={Response:w,Request:x},_.config={updatable:!1},e.router=_,t.exports=_})},function(e,n){e.exports=t},function(t,e){"use strict";var n=Object.prototype.hasOwnProperty,r=Object.prototype.toString,o=function(t){return"function"==typeof Array.isArray?Array.isArray(t):"[object Array]"===r.call(t)},i=function(t){if(!t||"[object Object]"!==r.call(t))return!1;var e=n.call(t,"constructor"),o=t.constructor&&t.constructor.prototype&&n.call(t.constructor.prototype,"isPrototypeOf");if(t.constructor&&!e&&!o)return!1;var i;for(i in t);return"undefined"==typeof i||n.call(t,i)};t.exports=function t(){var e,n,r,a,u,s,c=arguments[0],f=1,l=arguments.length,p=!1;for("boolean"==typeof c?(p=c,c=arguments[1]||{},f=2):("object"!=typeof c&&"function"!=typeof c||null==c)&&(c={});f<l;++f)if(e=arguments[f],null!=e)for(n in e)r=c[n],a=e[n],c!==a&&(p&&a&&(i(a)||(u=o(a)))?(u?(u=!1,s=r&&o(r)?r:[]):s=r&&i(r)?r:{},c[n]=t(p,s,a)):"undefined"!=typeof a&&(c[n]=a));return c}}])})},{riot:2}],2:[function(t,e,n){!function(t,r){"use strict";function o(t,e,n){var r={};return r[t.key]=e,t.pos&&(r[t.pos]=n),r}function i(t,e){for(var n,r=e.length,o=t.length;r>o;)n=e[--r],e.splice(r,1),n.unmount()}function a(t,e){Object.keys(t.tags).forEach(function(n){var r=t.tags[n];P(r)?v(r,function(t){S(t,n,e)}):S(r,n,e)})}function u(t,e,n){var r,o=t._root;for(t._virts=[];o;)r=o.nextSibling,n?e.insertBefore(o,n._root):e.appendChild(o),t._virts.push(o),o=r}function s(t,e,n,r){for(var o,i=t._root,a=0;a<r;a++)o=i.nextSibling,e.insertBefore(i,n._root),i=o}function c(t,e,n){_(t,"each");var r,c=typeof R(t,"no-reorder")!==rt||_(t,"no-reorder"),f=L(t),l=J[f]||{tmpl:y(t)},h=ut.test(f),d=t.parentNode,g=document.createTextNode(""),v=k(t),m="option"===f.toLowerCase(),b=[],x=[],w="VIRTUAL"==t.tagName;n=ht.loopKeys(n),d.insertBefore(g,t),e.one("before-mount",function(){t.parentNode.removeChild(t),d.stub&&(d=e.root)}).on("update",function(){var y=ht(n.val,e),_=document.createDocumentFragment();P(y)||(r=y||!1,y=r?Object.keys(y).map(function(t){return o(n,t,y[t])}):[]);for(var O=0,R=y.length;O<R;O++){var C=y[O],k=c&&typeof C==ot&&!r,N=x.indexOf(C),S=~N&&k?N:O,T=b[S];C=!r&&n.key?o(n,C,O):C,!k&&!T||k&&!~N||!T?(T=new p(l,{parent:e,isLoop:!0,hasImpl:!!J[f],root:h?d:t.cloneNode(),item:C},t.innerHTML),T.mount(),w&&(T._root=T.root.firstChild),O!=b.length&&b[O]?(w?u(T,d,b[O]):d.insertBefore(T.root,b[O].root),x.splice(O,0,C)):w?u(T,_):_.appendChild(T.root),b.splice(O,0,T),S=O):T.update(C,!0),S!==O&&k&&b[O]&&(w?s(T,d,b[O],t.childNodes.length):d.insertBefore(T.root,b[O].root),n.pos&&(T[n.pos]=O),b.splice(O,0,b.splice(S,1)[0]),x.splice(O,0,x.splice(S,1)[0]),!v&&T.tags&&a(T,O)),T._item=C,E(T,"_parent",e)}if(i(y,b),d.insertBefore(_,g),m&&lt&&!d.multiple)for(var j=0;j<d.length;j++)if(d[j].__riot1374){d.selectedIndex=j,delete d[j].__riot1374;break}v&&(e.tags[f]=b),x=y.slice()})}function f(t,e,n,r){I(t,function(t){if(1==t.nodeType){if(t.isLoop=t.isLoop||t.parentNode&&t.parentNode.isLoop||R(t,"each")?1:0,n){var o=k(t);o&&!t.isLoop&&n.push(T(o,{root:t,parent:e},t.innerHTML,e))}t.isLoop&&!r||V(t,e,[])}})}function l(t,e,n){function r(t,e,r){ht.hasExpr(e)&&n.push(A({dom:t,expr:e},r))}I(t,function(t){var n,o=t.nodeType;if(3==o&&"STYLE"!=t.parentNode.tagName&&r(t,t.nodeValue),1==o)return(n=R(t,"each"))?(c(t,e,n),!1):(v(t.attributes,function(e){var n=e.name,o=n.split("__")[1];if(r(t,e.value,{attr:o||n,bool:o}),o)return _(t,n),!1}),!k(t)&&void 0)})}function p(t,e,n){function o(){var t=b&&y?p:d||p;v(N.attributes,function(e){var n=e.value;h[O(e.name)]=ht.hasExpr(n)?ht(n,t):n}),v(Object.keys(T),function(e){h[O(e)]=ht(T[e],t)})}function i(t){for(var e in x)typeof p[e]!==it&&q(p,e)&&(p[e]=t[e])}function a(){p.parent&&y&&v(Object.keys(p.parent),function(t){var e=!st.test(t)&&M(L,t);(typeof p[t]===it||e)&&(e||L.push(t),p[t]=p.parent[t])})}function u(t){p.update(t,!0)}function s(t){if(v(k,function(e){e[t?"mount":"unmount"]()}),d){var e=t?"on":"off";y?d[e]("unmount",p.unmount):d[e]("update",u)[e]("unmount",p.unmount)}}var c,p=Q.observable(this),h=B(e.opts)||{},d=e.parent,y=e.isLoop,b=e.hasImpl,x=$(e.item),R=[],k=[],N=e.root,S=N.tagName.toLowerCase(),T={},L=[];t.name&&N._tag&&N._tag.unmount(!0),this.isMounted=!1,N.isLoop=y,N._tag=this,E(this,"_riot_id",++X),A(this,{parent:d,root:N,opts:h},x),E(this,"tags",{}),v(N.attributes,function(t){var e=t.value;ht.hasExpr(e)&&(T[t.name]=e)}),c=dt(t.tmpl,n),E(this,"update",function(t,e){return t=$(t),a(),t&&w(x)&&(i(t),x=t),A(p,t),o(),p.trigger("update",t),g(R,p),e&&p.parent?p.parent.one("updated",function(){p.trigger("updated")}):vt(function(){p.trigger("updated")}),this}),E(this,"mixin",function(){return v(arguments,function(t){var e,n,r=[];t=typeof t===rt?Q.mixin(t):t,e=m(t)?new t:t;do r=r.concat(Object.getOwnPropertyNames(n||e));while(n=Object.getPrototypeOf(n||e));v(r,function(t){"init"==t||p[t]||(p[t]=m(e[t])?e[t].bind(p):e[t])}),e.init&&e.init.bind(p)()}),this}),E(this,"mount",function(){o();var e=Q.mixin(W);if(e)for(var n in e)e.hasOwnProperty(n)&&p.mixin(e[n]);if(t.fn&&t.fn.call(p,h),l(c,p,R),s(!0),t.attrs&&D(t.attrs,function(t,e){C(N,t,e)}),(t.attrs||b)&&l(p.root,p,R),p.parent&&!y||p.update(x),p.trigger("before-mount"),y&&!b)N=c.firstChild;else{for(;c.firstChild;)N.appendChild(c.firstChild);N.stub&&(N=d.root)}E(p,"root",N),y&&f(p.root,p.parent,null,!0),!p.parent||p.parent.isMounted?(p.isMounted=!0,p.trigger("mount")):p.parent.one("mount",function(){F(p.root)||(p.parent.isMounted=p.isMounted=!0,p.trigger("mount"))})}),E(this,"unmount",function(t){var e,n=N,o=n.parentNode,i=Y.indexOf(p);if(p.trigger("before-unmount"),~i&&Y.splice(i,1),o){if(d)e=j(d),P(e.tags[S])?v(e.tags[S],function(t,n){t._riot_id==p._riot_id&&e.tags[S].splice(n,1)}):e.tags[S]=r;else for(;n.firstChild;)n.removeChild(n.firstChild);t?(_(o,nt),_(o,et)):o.removeChild(n)}this._virts&&v(this._virts,function(t){t.parentNode&&t.parentNode.removeChild(t)}),p.trigger("unmount"),s(),p.off("*"),p.isMounted=!1,delete N._tag}),f(c,this,k)}function h(e,n,r,o){r[e]=function(e){var i,a=o._parent,u=o._item;if(!u)for(;a&&!u;)u=a._item,a=a._parent;e=e||t.event,q(e,"currentTarget")&&(e.currentTarget=r),q(e,"target")&&(e.target=e.srcElement),q(e,"which")&&(e.which=e.charCode||e.keyCode),e.item=u,n.call(o,e)===!0||/radio|check/.test(r.type)||(e.preventDefault&&e.preventDefault(),e.returnValue=!1),e.preventUpdate||(i=u?j(a):o,i.update())}}function d(t,e,n){t&&(t.insertBefore(n,e),t.removeChild(e))}function g(t,e){v(t,function(t,n){var r=t.dom,o=t.attr,i=ht(t.expr,e),a=t.dom.parentNode;if(t.bool?i=!!i:null==i&&(i=""),t.value!==i){if(t.value=i,!o)return i+="",void(a&&("TEXTAREA"===a.tagName?(a.value=i,ft||(r.nodeValue=i)):r.nodeValue=i));if("value"===o)return void(r.value=i);if(_(r,o),m(i))h(o,i,r,e);else if("if"==o){var u=t.stub,s=function(){d(u.parentNode,u,r)},c=function(){d(r.parentNode,r,u)};i?u&&(s(),r.inStub=!1,F(r)||I(r,function(t){t._tag&&!t._tag.isMounted&&(t._tag.isMounted=!!t._tag.trigger("mount"))})):(u=t.stub=u||document.createTextNode(""),r.parentNode?c():(e.parent||e).one("updated",c),r.inStub=!0)}else"show"===o?r.style.display=i?"":"none":"hide"===o?r.style.display=i?"none":"":t.bool?(r[o]=i,i&&C(r,o,o),lt&&"selected"===o&&"OPTION"===r.tagName&&(r.__riot1374=i)):(0===i||i&&typeof i!==ot)&&(G(o,tt)&&o!=et&&(o=o.slice(tt.length)),C(r,o,i))}})}function v(t,e){for(var n,r=t?t.length:0,o=0;o<r;o++)n=t[o],null!=n&&e(n,o)===!1&&o--;return t}function m(t){return typeof t===at||!1}function y(t){if(t.outerHTML)return t.outerHTML;var e=H("div");return e.appendChild(t.cloneNode(!0)),e.innerHTML}function b(t,e){if(typeof t.innerHTML!=it)t.innerHTML=e;else{var n=(new DOMParser).parseFromString(e,"application/xml");t.appendChild(t.ownerDocument.importNode(n.documentElement,!0))}}function x(t){return~ct.indexOf(t)}function w(t){return t&&typeof t===ot}function _(t,e){t.removeAttribute(e)}function O(t){return t.replace(/-(\w)/g,function(t,e){return e.toUpperCase()})}function R(t,e){return t.getAttribute(e)}function C(t,e,n){t.setAttribute(e,n)}function k(t){return t.tagName&&J[R(t,nt)||R(t,et)||t.tagName.toLowerCase()]}function N(t,e,n){var r=n.tags[e];r?(P(r)||r!==t&&(n.tags[e]=[r]),M(n.tags[e],t)||n.tags[e].push(t)):n.tags[e]=t}function S(t,e,n){var r,o=t.parent;o&&(r=o.tags[e],P(r)?r.splice(n,0,r.splice(r.indexOf(t),1)[0]):N(t,e,o))}function T(t,e,n,r){var o=new p(t,e,n),i=L(e.root),a=j(r);return o.parent=a,o._parent=r,N(o,i,a),a!==r&&N(o,i,r),e.root.innerHTML="",o}function j(t){for(var e=t;!k(e.root)&&e.parent;)e=e.parent;return e}function E(t,e,n,r){return Object.defineProperty(t,e,A({value:n,enumerable:!1,writable:!1,configurable:!0},r)),t}function L(t){var e=k(t),n=R(t,"name"),r=n&&!ht.hasExpr(n)?n:e?e.name:t.tagName.toLowerCase();return r}function A(t){for(var e,n=arguments,r=1;r<n.length;++r)if(e=n[r])for(var o in e)q(t,o)&&(t[o]=e[o]);return t}function M(t,e){return~t.indexOf(e)}function P(t){return Array.isArray(t)||t instanceof Array}function q(t,e){var n=Object.getOwnPropertyDescriptor(t,e);return typeof t[e]===it||n&&n.writable}function $(t){if(!(t instanceof p||t&&typeof t.trigger==at))return t;var e={};for(var n in t)st.test(n)||(e[n]=t[n]);return e}function I(t,e){if(t){if(e(t)===!1)return;for(t=t.firstChild;t;)I(t,e),t=t.nextSibling}}function D(t,e){for(var n,r=/([-\w]+) ?= ?(?:"([^"]*)|'([^']*)|({[^}]*}))/g;n=r.exec(t);)e(n[1].toLowerCase(),n[2]||n[3]||n[4])}function F(t){for(;t;){if(t.inStub)return!0;t=t.parentNode}return!1}function H(t,e){return e?document.createElementNS("http://www.w3.org/2000/svg","svg"):document.createElement(t)}function U(t,e){return(e||document).querySelectorAll(t)}function z(t,e){return(e||document).querySelector(t)}function B(t){function e(){}return e.prototype=t,new e}function K(t){return R(t,"id")||R(t,"name")}function V(t,e,n){var r,o=K(t),i=function(i){M(n,o)||(r=P(i),i?(!r||r&&!M(i,t))&&(r?i.push(t):e[o]=[i,t]):e[o]=t)};o&&(ht.hasExpr(o)?e.one("mount",function(){o=K(t),i(e[o])}):i(e[o]))}function G(t,e){return t.slice(0,e.length)===e}function Z(t,e,n){var r=J[e],o=t._innerHTML=t._innerHTML||t.innerHTML;return t.innerHTML="",r&&t&&(r=new p(r,{root:t,opts:n},o)),r&&r.mount&&(r.mount(),M(Y,r)||Y.push(r)),r}var Q={version:"v2.5.0",settings:{}},X=0,Y=[],J={},W="__global_mixin",tt="riot-",et=tt+"tag",nt="data-is",rt="string",ot="object",it="undefined",at="function",ut=/^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?|opt(?:ion|group))$/,st=/^(?:_(?:item|id|parent)|update|root|(?:un)?mount|mixin|is(?:Mounted|Loop)|tags|parent|opts|trigger|o(?:n|ff|ne))$/,ct=["altGlyph","animate","animateColor","circle","clipPath","defs","ellipse","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence","filter","font","foreignObject","g","glyph","glyphRef","image","line","linearGradient","marker","mask","missing-glyph","path","pattern","polygon","polyline","radialGradient","rect","stop","svg","switch","symbol","text","textPath","tref","tspan","use"],ft=0|(t&&t.document||{}).documentMode,lt=t&&!!t.InstallTrigger;Q.observable=function(t){function e(t,e){for(var n,r,o=t.split(" "),i=o.length,a=0;a<i;a++)n=o[a],r=n.indexOf("."),n&&e(~r?n.substring(0,r):n,a,~r?n.slice(r+1):null)}t=t||{};var n={},r=Array.prototype.slice;return Object.defineProperties(t,{on:{value:function(r,o){return"function"!=typeof o?t:(e(r,function(t,e,r){(n[t]=n[t]||[]).push(o),o.typed=e>0,o.ns=r}),t)},enumerable:!1,writable:!1,configurable:!1},off:{value:function(r,o){return"*"!=r||o?e(r,function(t,e,r){if(o||r)for(var i,a=n[t],u=0;i=a&&a[u];++u)(i==o||r&&i.ns==r)&&a.splice(u--,1);else delete n[t]}):n={},t},enumerable:!1,writable:!1,configurable:!1},one:{value:function(e,n){function r(){t.off(e,r),n.apply(t,arguments)}return t.on(e,r)},enumerable:!1,writable:!1,configurable:!1},trigger:{value:function(o){for(var i,a=arguments.length-1,u=new Array(a),s=0;s<a;s++)u[s]=arguments[s+1];return e(o,function(e,o,a){i=r.call(n[e]||[],0);for(var s,c=0;s=i[c];++c)s.busy||(s.busy=1,a&&s.ns!=a||s.apply(t,s.typed?[e].concat(u):u),i[c]!==s&&c--,s.busy=0);n["*"]&&"*"!=e&&t.trigger.apply(t,["*",e].concat(u))}),t},enumerable:!1,writable:!1,configurable:!1}}),t},function(e){function n(t){return t.split(/[\/?#]/)}function r(t,e){var n=new RegExp("^"+e[R](/\*/g,"([^/?#]+?)")[R](/\.\./,".*")+"$"),r=t.match(n);if(r)return r.slice(1)}function o(t,e){var n;return function(){clearTimeout(n),n=setTimeout(t,e)}}function i(t){d=o(l,1),T[_](C,d),T[_](k,d),j[_](M,p),t&&l(!0)}function a(){this.$=[],e.observable(this),q.on("stop",this.s.bind(this)),q.on("emit",this.e.bind(this))}function u(t){return t[R](/^\/|\/$/,"")}function s(t){return"string"==typeof t}function c(t){return(t||L.href)[R](b,"")}function f(t){return"#"==g[0]?(t||L.href||"").split(g)[1]||"":(L?c(t):t||"")[R](g,"")}function l(t){var e=0==D;if(!(S<=D)&&(D++,I.push(function(){var e=f();(t||e!=v)&&(q[N]("emit",e),v=e)}),e)){for(;I.length;)I[0](),I.shift();D=0}}function p(t){if(!(1!=t.which||t.metaKey||t.ctrlKey||t.shiftKey||t.defaultPrevented)){for(var e=t.target;e&&"A"!=e.nodeName;)e=e.parentNode;!e||"A"!=e.nodeName||e[O]("download")||!e[O]("href")||e.target&&"_self"!=e.target||e.href.indexOf(L.href.match(b)[0])==-1||(e.href==L.href||e.href.split("#")[0]!=L.href.split("#")[0]&&("#"==g||0===c(e.href).indexOf(g))&&h(f(e.href),e.title||j.title))&&t.preventDefault()}}function h(t,e,n){return E?(t=g+u(t),e=e||j.title,n?E.replaceState(null,e,t):E.pushState(null,e,t),j.title=e,$=!1,l(),$):q[N]("emit",f(t))}var d,g,v,m,y,b=/^.+?\/\/+[^\/]+/,x="EventListener",w="remove"+x,_="add"+x,O="hasAttribute",R="replace",C="popstate",k="hashchange",N="trigger",S=3,T="undefined"!=typeof t&&t,j="undefined"!=typeof document&&document,E=T&&history,L=T&&(E.location||T.location),A=a.prototype,M=j&&j.ontouchstart?"touchstart":"click",P=!1,q=e.observable(),$=!1,I=[],D=0;A.m=function(t,e,n){!s(t)||e&&!s(e)?e?this.r(t,e):this.r("@",t):h(t,e,n||!1)},A.s=function(){this.off("*"),this.$=[]},A.e=function(t){this.$.concat("@").some(function(e){var n=("@"==e?m:y)(u(t),u(e));if("undefined"!=typeof n)return this[N].apply(null,[e].concat(n)),$=!0},this)},A.r=function(t,e){"@"!=t&&(t="/"+u(t),this.$.push(t)),this.on(t,e)};var F=new a,H=F.m.bind(F);H.create=function(){var t=new a,e=t.m.bind(t);return e.stop=t.s.bind(t),e},H.base=function(t){g=t||"#",v=f()},H.exec=function(){l(!0)},H.parser=function(t,e){t||e||(m=n,y=r),t&&(m=t),e&&(y=e)},H.query=function(){var t={},e=L.href||v;return e[R](/[?&](.+?)=([^&]*)/g,function(e,n,r){t[n]=r}),t},H.stop=function(){P&&(T&&(T[w](C,d),T[w](k,d),j[w](M,p)),q[N]("stop"),P=!1)},H.start=function(t){P||(T&&("complete"==document.readyState?i(t):T[_]("load",function(){setTimeout(function(){i(t)},1)})),P=!0)},H.base(),H.parser(),e.route=H}(Q);var pt=function(t){function e(t){return t}function n(t,e){return e||(e=m),new RegExp(t.source.replace(/{/g,e[2]).replace(/}/g,e[3]),t.global?c:"")}function r(t){if(t===d)return g;var e=t.split(" ");if(2!==e.length||/[\x00-\x1F<>a-zA-Z0-9'",;\\]/.test(t))throw new Error('Unsupported brackets "'+t+'"');return e=e.concat(t.replace(/(?=[[\]()*+?.^$|])/g,"\\").split(" ")),e[4]=n(e[1].length>1?/{[\S\s]*?}/:g[4],e),e[5]=n(t.length>3?/\\({|})/g:g[5],e),e[6]=n(g[6],e),e[7]=RegExp("\\\\("+e[3]+")|([[({])|("+e[3]+")|"+p,c),e[8]=t,e}function o(t){return t instanceof RegExp?u(t):m[t]}function i(t){(t||(t=d))!==m[8]&&(m=r(t),u=t===d?e:n,m[9]=u(g[9])),v=t}function a(t){var e;t=t||{},e=t.brackets,Object.defineProperty(t,"brackets",{set:i,get:function(){return v},enumerable:!0}),s=t,i(e)}var u,s,c="g",f=/\/\*[^*]*\*+(?:[^*\/][^*]*\*+)*\//g,l=/"[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'/g,p=l.source+"|"+/(?:\breturn\s+|(?:[$\w\)\]]|\+\+|--)\s*(\/)(?![*\/]))/.source+"|"+/\/(?=[^*\/])[^[\/\\]*(?:(?:\[(?:\\.|[^\]\\]*)*\]|\\.)[^[\/\\]*)*?(\/)[gim]*/.source,h={"(":RegExp("([()])|"+p,c),"[":RegExp("([[\\]])|"+p,c),"{":RegExp("([{}])|"+p,c)},d="{ }",g=["{","}","{","}",/{[^}]*}/,/\\([{}])/g,/\\({)|{/g,RegExp("\\\\(})|([[({])|(})|"+p,c),d,/^\s*{\^?\s*([$\w]+)(?:\s*,\s*(\S+))?\s+in\s+(\S.*)\s*}/,/(^|[^\\]){=[\S\s]*?}/],v=t,m=[];return o.split=function(t,e,n){function r(t){e||a?c.push(t&&t.replace(n[5],"$1")):c.push(t)}function o(t,e,n){var r,o=h[e];for(o.lastIndex=n,n=1;(r=o.exec(t))&&(!r[1]||(r[1]===e?++n:--n)););return n?t.length:o.lastIndex}n||(n=m);var i,a,u,s,c=[],f=n[6];for(a=u=f.lastIndex=0;i=f.exec(t);){if(s=i.index,a){if(i[2]){f.lastIndex=o(t,i[2],f.lastIndex);continue}if(!i[3])continue}i[1]||(r(t.slice(u,s)),u=f.lastIndex,f=n[6+(a^=1)],f.lastIndex=u)}return t&&u<t.length&&r(t.slice(u)),c},o.hasExpr=function(t){return m[4].test(t)},o.loopKeys=function(t){var e=t.match(m[9]);return e?{key:e[1],pos:e[2],val:m[0]+e[3].trim()+m[1]}:{val:t.trim()}},o.array=function(t){return t?r(t):m},Object.defineProperty(o,"settings",{set:a,get:function(){return s}}),o.settings="undefined"!=typeof Q&&Q.settings||{},o.set=i,o.R_STRINGS=l,o.R_MLCOMMS=f,o.S_QBLOCKS=p,o}(),ht=function(){function e(t,e){return t?(u[t]||(u[t]=r(t))).call(e,n):t}function n(t,n){e.errorHandler&&(t.riotData={tagName:n&&n.root&&n.root.tagName,_riot_id:n&&n._riot_id},e.errorHandler(t))}function r(t){var e=o(t);return"try{return "!==e.slice(0,11)&&(e="return "+e),new Function("E",e+";")}function o(t){var e,n=[],r=pt.split(t.replace(l,'"'),1);if(r.length>2||r[0]){var o,a,u=[];for(o=a=0;o<r.length;++o)e=r[o],e&&(e=1&o?i(e,1,n):'"'+e.replace(/\\/g,"\\\\").replace(/\r\n?|\n/g,"\\n").replace(/"/g,'\\"')+'"')&&(u[a++]=e);e=a<2?u[0]:"["+u.join(",")+'].join("")'}else e=i(r[1],0,n);return n[0]&&(e=e.replace(p,function(t,e){return n[e].replace(/\r/g,"\\r").replace(/\n/g,"\\n")})),e}function i(t,e,n){function r(e,n){var r,o=1,i=h[e];for(i.lastIndex=n.lastIndex;r=i.exec(t);)if(r[0]===e)++o;else if(!--o)break;n.lastIndex=o?t.length:i.lastIndex}if(t=t.replace(f,function(t,e){return t.length>2&&!e?s+(n.push(t)-1)+"~":t}).replace(/\s+/g," ").trim().replace(/\ ?([[\({},?\.:])\ ?/g,"$1")){for(var o,i=[],u=0;t&&(o=t.match(c))&&!o.index;){var l,p,d=/,|([[{(])|$/g;for(t=RegExp.rightContext,l=o[2]?n[o[2]].slice(1,-1).trim().replace(/\s+/g," "):o[1];p=(o=d.exec(t))[1];)r(p,d);p=t.slice(0,o.index),t=RegExp.rightContext,i[u++]=a(p,1,l)}t=u?u>1?"["+i.join(",")+'].join(" ").trim()':i[0]:a(t,e)}return t}function a(t,e,n){var r;return t=t.replace(g,function(t,e,n,o,i){return n&&(o=r?0:o+t.length,"this"!==n&&"global"!==n&&"window"!==n?(t=e+'("'+n+d+n,o&&(r="."===(i=i[o])||"("===i||"["===i)):o&&(r=!v.test(i.slice(o)))),t}),r&&(t="try{return "+t+"}catch(e){E(e,this)}"),n?t=(r?"function(){"+t+"}.call(this)":"("+t+")")+'?"'+n+'":""':e&&(t="function(v){"+(r?t.replace("return ","v="):"v=("+t+")")+';return v||v===0?v:""}.call(this)'),t}var u={};e.haveRaw=pt.hasRaw,e.hasExpr=pt.hasExpr,e.loopKeys=pt.loopKeys,e.errorHandler=null;var s="⁗",c=/^(?:(-?[_A-Za-z\xA0-\xFF][-\w\xA0-\xFF]*)|\u2057(\d+)~):/,f=RegExp(pt.S_QBLOCKS,"g"),l=/\u2057/g,p=/\u2057(\d+)~/g,h={"(":/[()]/g,"[":/[[\]]/g,"{":/[{}]/g},d='"in this?this:'+("object"!=typeof t?"global":"window")+").",g=/[,{][$\w]+:|(^ *|[^$\w\.])(?!(?:typeof|true|false|null|undefined|in|instanceof|is(?:Finite|NaN)|void|NaN|new|Date|RegExp|Math)(?![$\w]))([$_A-Za-z][$\w]*)/g,v=/^(?=(\.[$\w]+))\1(?:[^.[(]|$)/;return e.parse=function(t){return t},e.version=pt.version="v2.4.0",e}(),dt=function t(){function t(t,r){var o=t&&t.match(/^\s*<([-\w]+)/),i=o&&o[1].toLowerCase(),a=H("div",x(i));return t=n(t,r),s.test(i)?a=e(a,t,i):b(a,t),a.stub=!0,a}function e(t,e,n){var r="o"===n[0],o=r?"select>":"table>";if(t.innerHTML="<"+o+e.trim()+"</"+o,o=t.firstChild,r)o.selectedIndex=-1;else{var i=u[n];i&&1===o.childElementCount&&(o=z(i,o))}return o}function n(t,e){if(!r.test(t))return t;var n={};return e=e&&e.replace(i,function(t,e,r){return n[e]=n[e]||r,""}).trim(),t.replace(a,function(t,e,r){return n[e]||r||""}).replace(o,function(t,n){return e||n||""})}var r=/<yield\b/i,o=/<yield\s*(?:\/>|>([\S\s]*?)<\/yield\s*>|>)/gi,i=/<yield\s+to=['"]([^'">]*)['"]\s*>([\S\s]*?)<\/yield\s*>/gi,a=/<yield\s+from=['"]?([-\w]+)['"]?\s*(?:\/>|>([\S\s]*?)<\/yield\s*>)/gi,u={tr:"tbody",th:"tr",td:"tr",col:"colgroup"},s=ft&&ft<10?ut:/^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?)$/;return t}(),gt=function(e){if(!t)return{add:function(){},inject:function(){}};var n=function(){var t=H("style");C(t,"type","text/css");var e=z("style[type=riot]");return e?(e.id&&(t.id=e.id),e.parentNode.replaceChild(t,e)):document.getElementsByTagName("head")[0].appendChild(t),t}(),r=n.styleSheet,o="";return Object.defineProperty(e,"styleNode",{value:n,writable:!0}),{add:function(t){o+=t},inject:function(){o&&(r?r.cssText+=o:n.innerHTML+=o,o="")}}}(Q),vt=function(t){var e=t.requestAnimationFrame||t.mozRequestAnimationFrame||t.webkitRequestAnimationFrame;if(!e||/iP(ad|hone|od).*OS 6/.test(t.navigator.userAgent)){var n=0;e=function(t){var e=Date.now(),r=Math.max(16-(e-n),0);setTimeout(function(){t(n=e+r)},r)}}return e}(t||{});Q.util={brackets:pt,tmpl:ht},Q.mixin=function(){var t={},e=t[W]={},n=0;return function(r,o,i){if(w(r))return void Q.mixin("__unnamed_"+n++,r,!0);var a=i?e:t;if(!o){if(typeof a[r]===it)throw new Error("Unregistered mixin: "+r);return a[r]}m(o)?(A(o.prototype,a[r]||{}),a[r]=o):a[r]=A(a[r]||{},o)}}(),Q.tag=function(t,e,n,r,o){return m(r)&&(o=r,/^[\w\-]+\s?=/.test(n)?(r=n,n=""):r=""),n&&(m(n)?o=n:gt.add(n)),t=t.toLowerCase(),J[t]={name:t,tmpl:e,attrs:r,fn:o},t},Q.tag2=function(t,e,n,r,o){return n&&gt.add(n),J[t]={name:t,tmpl:e,attrs:r,fn:o},t},Q.mount=function(t,e,n){function r(t){var e="";return v(t,function(t){/[^-\w]/.test(t)||(t=t.trim().toLowerCase(),e+=",["+nt+'="'+t+'"],['+et+'="'+t+'"]')}),e}function o(){var t=Object.keys(J);return t+r(t)}function i(t){if(t.tagName){var r=R(t,nt)||R(t,et);
-e&&r!==e&&(r=e,C(t,nt,e),C(t,et,e));var o=Z(t,r||t.tagName.toLowerCase(),n);o&&s.push(o)}else t.length&&v(t,i)}var a,u,s=[];if(gt.inject(),w(e)&&(n=e,e=0),typeof t===rt?("*"===t?t=u=o():t+=r(t.split(/, */)),a=t?U(t):[]):a=t,"*"===e){if(e=u||o(),a.tagName)a=U(e,a);else{var c=[];v(a,function(t){c.push(U(e,t))}),a=c}e=0}return i(a),s},Q.update=function(){return v(Y,function(t){t.update()})},Q.vdom=Y,Q.Tag=p,typeof n===ot?e.exports=Q:typeof define===at&&typeof define.amd!==it?define(function(){return Q}):t.riot=Q}("undefined"!=typeof window?window:void 0)},{}],3:[function(t,e,n){var r={_stores:[],addStore:function(t){this._stores.push(t)},reset:function(){this._stores=[]}};["on","one","off","trigger"].forEach(function(t){r[t]=function(){var e=[].slice.call(arguments);this._stores.forEach(function(n){n[t].apply(n,e)})}}),"undefined"!=typeof e&&(e.exports=r)},{}],4:[function(t,e,n){var r=t("riot");t("riot-router"),t("./tags/home.tag"),t("./tags/hello.tag"),t("./tags/not-found.tag"),t("./tags/menubar.tag");var o=r.router.Route;DefaultRoute=r.router.DefaultRoute,NotFoundRoute=r.router.NotFoundRoute,RedirectRoute=r.router.RedirectRoute,r.router.routes([new o({path:"/hehehe/:zz",tag:"hello"}),new DefaultRoute({tag:"home"}),new RedirectRoute({from:"x",to:"hehehe"}),new NotFoundRoute({tag:"not-found"})]),r.mount("*"),r.router.start()},{"./tags/hello.tag":8,"./tags/home.tag":9,"./tags/menubar.tag":10,"./tags/not-found.tag":11,riot:2,"riot-router":1}],5:[function(t,e,n){var r={};e.exports=r},{}],6:[function(t,e,n){var r=t("riotcontrol"),o=t("./Actions"),i=t("../stores/ConfigStore"),a={};o.Action=a,a.SetName=function(t){r.trigger(i.Action.SetName,t)},e.exports=a},{"../stores/ConfigStore":7,"./Actions":5,riotcontrol:3}],7:[function(t,e,n){var r=t("riot"),o=t("riotcontrol"),i=function(){r.observable(this);var t=this;t.Action={Changed:"ConfigStore_Value_Changed",SetName:"ConfigStore_SetName"},t.on(t.Action.SetName,function(e){t.test=e,t.trigger(t.Action.Changed,e)})},a=new i;o.addStore(a),e.exports=a},{riot:2,riotcontrol:3}],8:[function(t,e,n){var r=t("riot");e.exports=r.tag2("hello",'<menubar name="{opts.zz}"></menubar> <h1>こんにちわ {opts.zz} </h1> <p>{config.test}</p>',"","",function(e){var n=t("../scripts/stores/ConfigStore.js");this.config=n})},{"../scripts/stores/ConfigStore.js":7,riot:2}],9:[function(t,e,n){var r=t("riot");e.exports=r.tag2("home",'<menubar></menubar> <h1>Home<span class="glyphicon glyphicon-flash" aria-hidden="true"></span></h1> <p>{test}</p> <form onsubmit="{add}"> <input name="input" onkeyup="{edit}"> <button class="btn btn-primary" __disabled="{!text}">Change</button> </form>',"","",function(e){var n=t("riotcontrol"),r=t("../scripts/stores/ConfigStore"),o=t("../scripts/actions/SampleAction");this.disabled=!0;var i=this;n.on(r.Action.Changed,function(t){i.test=t,i.update()}),this.edit=function(t){this.text=t.target.value}.bind(this),this.add=function(t){this.text&&(o.SetName(this.input.value),this.text=this.input.value="")}.bind(this)})},{"../scripts/actions/SampleAction":6,"../scripts/stores/ConfigStore":7,riot:2,riotcontrol:3}],10:[function(t,e,n){var r=t("riot");e.exports=r.tag2("menubar",'<nav class="navbar navbar-default navbar-fixed-top"> <div class="container-fluid"> <div class="navbar-header"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/#/">Chaap</a> </div> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li each="{links}" class="{active:act}"><a href="/#/hehehe/{name}">{name}</a></li> </ul> </div> </div> </nav>',"","",function(t){this.links=[{name:"Neko",act:!1},{name:"Kuma",act:!1},{name:"User1",act:!1},{name:"User2",act:!1},{name:"User3",act:!1}];for(var e=0;e<this.links.length;e++)this.links[e].name==t.name&&(this.links[e].act=!0)})},{riot:2}],11:[function(t,e,n){var r=t("riot");e.exports=r.tag2("not-found","<p>404</p>","","",function(t){})},{riot:2}]},{},[4]);
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e(require("riot")):"function"==typeof define&&define.amd?define(["riot"],e):"object"==typeof exports?exports.Router=e(require("riot")):t.Router=e(t.riot)}(this,function(t){return function(t){function e(n){if(r[n])return r[n].exports;var i=r[n]={exports:{},id:n,loaded:!1};return t[n].call(i.exports,i,i.exports,e),i.loaded=!0,i.exports}var r={};return e.m=t,e.c=r,e.p="",e(0)}([function(t,e,r){var n,i,o;!function(u,s){i=[t,r(1),r(2)],n=s,o="function"==typeof n?n.apply(e,i):n,!(void 0!==o&&(t.exports=o))}(this,function(t,e,r){"use strict";function n(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function i(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function u(t){var e=t.split("?"),r=e[0].split("/"),n=e[1],i={};return n&&n.split("&").forEach(function(t){var e=t.split("=");i[e[0]]=e[1]}),r.push(i),r}var s=function(){function t(t,e){var r=[],n=!0,i=!1,o=void 0;try{for(var u,s=t[Symbol.iterator]();!(n=(u=s.next()).done)&&(r.push(u.value),!e||r.length!==e);n=!0);}catch(a){i=!0,o=a}finally{try{!n&&s["return"]&&s["return"]()}finally{if(i)throw o}}return r}return function(e,r){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return t(e,r);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),a=function x(t,e,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,e);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:x(i,e,r)}if("value"in n)return n.value;var o=n.get;if(void 0!==o)return o.call(r)},c=function(){function t(t,e){for(var r=0;r<e.length;r++){var n=e[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}return function(e,r,n){return r&&t(e.prototype,r),n&&t(e,n),e}}(),h=console&&console.error||function(){},f=function(){function t(){o(this,t),e.router=this,e.observable(this),this.interceptors=[this.processRoute.bind(this)],this.handler=new v,this.current=new p("").response,this.process=this.process.bind(this)}return c(t,[{key:"route",value:function(t){this.handler=t}},{key:"routes",value:function(t){this.route((new v).routes(t))}},{key:"use",value:function(t){this.interceptors.push(t)}},{key:"process",value:function(){var t=Array.prototype.slice.call(arguments),e={},r=t.filter(function(t){return"string"==typeof t||(e=t,!1)}).join("/");"/"!==r[0]&&(r="/"+r);var n=new p(new k(r,e));return this.rootContext||(this.rootContext=n),this.processRequest(n),n}},{key:"processRequest",value:function(t){return this.processInterceptors(t),this.processResponse(t)}},{key:"processResponse",value:function(t){if(this.isRedirect(t))return this.processRedirect(t);var e=(t.request,t.response);return e.redirectTo?void 0:(this.current=e,this.rootContext=null,this.trigger("route:updated",e),t)}},{key:"isRedirect",value:function(t){return!!t.response.redirectTo}},{key:"processRedirect",value:function(t){var e=t.response.redirectTo;this.rootContext.addRedirect(e),this.navigateTo(e)}},{key:"navigateTo",value:function(t){e.route(t)}},{key:"processInterceptors",value:function(t,e,r){var n=(e||[]).concat(this.interceptors).concat(r||[]),i=function o(){if(!t.stop){var e=n.shift(),r=t.request,i=t.response;if(e)return e(r,i,o,t)}return t};return i()}},{key:"processRoute",value:function(t,e,r,n){return this.handler.process(t,e,n),r()}},{key:"start",value:function(){e.route.parser(u),e.route(this.process),e.route.start(),this.exec()}},{key:"exec",value:function(){e.route.exec(this.process)}}]),t}(),p=function(){function t(e){o(this,t),this.request="string"==typeof e?new k(e):e,this.response=new R(this.request),this.redirectStack=[]}return c(t,[{key:"addRedirect",value:function(t){if(this.redirectStack.indexOf(t)>-1)throw new Error("Cyclic redirection to "+t+". Stack = "+this.redirectStack);this.redirectStack.push(t)}}]),t}(),l=function(){function t(){o(this,t)}return c(t,[{key:"matches",value:function(t){return!1}},{key:"process",value:function(t,e){var r=this.matches(t);return r?this.routeMatch(t,e,r):this.routeMiss(t,e)}},{key:"routeMatch",value:function(t,e,r){return e.add(r),!0}},{key:"routeMiss",value:function(t,e){return!1}},{key:"processRoutes",value:function(t,e,r){if(r&&r.length){for(var n=r.length,i=0;i<n;i++){var o=r[i];if(o.process(t,e))return!0}return!1}}},{key:"createRequest",value:function(t,e){return new d(t,e)}}]),t}(),y=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));t=t||{},r.tag=t.tag,r.api=t.api,r.path=t.path,r.name=t.name,r.updatable=t.updatable,r.pathParameterNames=[];var i=r.getPath().replace(/^\//,"");return r.pattern="^/?"+i.replace(/:([^\/]+)/g,function(t,e){return this.pathParameterNames.push(e),"([^/]+)"}.bind(r))+"(:?/|$)",r.regex=new RegExp(r.pattern),r}return i(e,t),c(e,[{key:"routes",value:function(t){var e=t.filter(function(t){return t instanceof m}),r=t.filter(function(t){return t instanceof b}),n=t.filter(function(t){return t instanceof g}),i=t.filter(function(t){return e.indexOf(t)===-1&&r.indexOf(t)===-1&&n.indexOf(t)===-1});return n.length>1&&h("Can't use more than one NotFoundRoute per route. --> "+this.getPath()),r.length>1&&h("Can't use more than one DefaultRoute per route. --> "+this.getPath()),this._routes=[].concat(e).concat(i).concat(r).concat(n),this}},{key:"matches",value:function(t){var e=this.regex.exec(t.uri);if(e){var r={};for(var n in this.pathParameterNames)if(this.pathParameterNames.hasOwnProperty(n)){var i=this.pathParameterNames[n];r[i]=decodeURIComponent(e[parseInt(n,10)+1])}return{route:this,tag:this.tag,api:this.api,found:e[0],params:r}}return!1}},{key:"routeMatch",value:function(t,r,n){var i=a(Object.getPrototypeOf(e.prototype),"routeMatch",this).call(this,t,r,n);return this.processRoutes(t,r,n),i}},{key:"processRoutes",value:function(t,r,n){return a(Object.getPrototypeOf(e.prototype),"processRoutes",this).call(this,this.createRequest(t,n),r,this._routes)}},{key:"getPath",value:function(){return this.name||this.path||("string"==typeof this.tag?this.tag:"")}}]),e}(l),v=function(t){function e(){return o(this,e),n(this,Object.getPrototypeOf(e).apply(this,arguments))}return i(e,t),e}(y),d=function w(t,e){o(this,w),this.request=t,this.matcher=e,this.uri=this.request.uri.substring(e.found.length),this.parentUri=this.request.uri.substring(0,e.found.length),this.query=this.request.query},g=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},r.tag=t.tag,r.api=t.api,r}return i(e,t),c(e,[{key:"matches",value:function(t){return{route:this,tag:this.tag,api:this.api,found:t.uri}}}]),e}(l),m=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},r.from=t.from,r.to=t.to,r.pattern="(^/?)"+r.from+"(/|$)",r.regex=new RegExp(r.pattern),r}return i(e,t),c(e,[{key:"process",value:function(t,e){var r=t.uri.replace(this.regex,"$1"+this.to+"$2");if(r!==t.uri){var n=t.parentUri||"";return e.redirectTo=n+r,!0}}}]),e}(l),b=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},r.tag=t.tag,r.api=t.api,r}return i(e,t),c(e,[{key:"matches",value:function(t){var e=t.uri.trim();if("/"===e||""===e)return{route:this,tag:this.tag,api:this.api,found:e}}}]),e}(l),k=function j(t,e){o(this,j),this.uri=t,this.query=e},R=function(){function t(e){o(this,t),this.uri=e.uri,this.matches=[],this.params={},this.query=e.query}return c(t,[{key:"add",value:function(t){this.matches.push(t);var e=t.params;if(e)for(var r in e)e.hasOwnProperty(r)&&(this.params[r]=e[r])}},{key:"get",value:function(t){return this.matches[t]}},{key:"size",value:function(){return this.matches.length}},{key:"isEmpty",value:function(){return this.matches.length}}]),t}();e.tag("route","<router-content></router-content>",function(t){this.calculateLevel=function(t){var e=0;return t.parent&&(e+=this.calculateLevel(t.parent)),t.opts.__router_level&&(e+=t.opts.__router_level),t.__router_tag&&(e+=1),e}.bind(this),this.normalizeTag=function(t,e,r){var n=t(e,r);return"string"==typeof n?t=n:(t=n.tag||t,e=n.api||e),[t,e,r]},this.unmountTag=function(){this.instance&&this.instance.unmount(!0)},this.mountTag=function(t,r,n){if("function"==typeof t){var i=this.normalizeTag(t,r,n),o=s(i,3);t=o[0],r=o[1],n=o[2]}this.canUpdate(t,r,n)?this.instance.update(r):(this.unmountTag(),t&&(this.root.replaceChild(document.createElement(t),this.root.children[0]),this.instance=e.mount(this.root.children[0],t,r)[0],this.instanceTag=t,this.instanceApi=r))},this.canUpdate=function(r,n,i){return!!((e.router.config.updatable||t.updatable||i.updatable)&&this.instance&&this.instance.isMounted&&this.instanceTag===r)},this.updateRoute=function(){var n={tag:null};if(e.router&&e.router.current){var i=e.router.current;if(this.level<=i.size()){var o=i.get(this.level);if(o){var u=o.params||{},s=i.query||{},a=r(!0,{},t,s,o.api,u,{__router_level:this.level,query:s});n={tag:o.tag,api:a,updatable:o.route.updatable}}}}n.tag?this.mountTag(n.tag,n.api,n):this.unmountTag()}.bind(this),this.__router_tag="route",this.level=this.calculateLevel(this),e.router.on("route:updated",this.updateRoute),this.on("unmount",function(){e.router.off("route:updated",this.updateRoute),this.unmountTag()}.bind(this)),this.on("mount",function(){this.updateRoute()}.bind(this))});var O=new f;O.Route=y,O.DefaultRoute=b,O.RedirectRoute=m,O.NotFoundRoute=g,O._={Response:R,Request:k},O.config={updatable:!1},e.router=O,t.exports=O})},function(e,r){e.exports=t},function(t,e){"use strict";var r=Object.prototype.hasOwnProperty,n=Object.prototype.toString,i=function(t){return"function"==typeof Array.isArray?Array.isArray(t):"[object Array]"===n.call(t)},o=function(t){if(!t||"[object Object]"!==n.call(t))return!1;var e=r.call(t,"constructor"),i=t.constructor&&t.constructor.prototype&&r.call(t.constructor.prototype,"isPrototypeOf");if(t.constructor&&!e&&!i)return!1;var o;for(o in t);return"undefined"==typeof o||r.call(t,o)};t.exports=function u(){var t,e,r,n,s,a,c=arguments[0],h=1,f=arguments.length,p=!1;for("boolean"==typeof c?(p=c,c=arguments[1]||{},h=2):("object"!=typeof c&&"function"!=typeof c||null==c)&&(c={});h<f;++h)if(t=arguments[h],null!=t)for(e in t)r=c[e],n=t[e],c!==n&&(p&&n&&(o(n)||(s=i(n)))?(s?(s=!1,a=r&&i(r)?r:[]):a=r&&o(r)?r:{},c[e]=u(p,a,n)):"undefined"!=typeof n&&(c[e]=n));return c}}])});
+
+},{"riot":2}],2:[function(require,module,exports){
+/* Riot v2.5.0, @license MIT */
+
+;(function(window, undefined) {
+  'use strict';
+var riot = { version: 'v2.5.0', settings: {} },
+  // be aware, internal usage
+  // ATTENTION: prefix the global dynamic variables with `__`
+
+  // counter to give a unique id to all the Tag instances
+  __uid = 0,
+  // tags instances cache
+  __virtualDom = [],
+  // tags implementation cache
+  __tagImpl = {},
+
+  /**
+   * Const
+   */
+  GLOBAL_MIXIN = '__global_mixin',
+
+  // riot specific prefixes
+  RIOT_PREFIX = 'riot-',
+  RIOT_TAG = RIOT_PREFIX + 'tag',
+  RIOT_TAG_IS = 'data-is',
+
+  // for typeof == '' comparisons
+  T_STRING = 'string',
+  T_OBJECT = 'object',
+  T_UNDEF  = 'undefined',
+  T_FUNCTION = 'function',
+  // special native tags that cannot be treated like the others
+  SPECIAL_TAGS_REGEX = /^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?|opt(?:ion|group))$/,
+  RESERVED_WORDS_BLACKLIST = /^(?:_(?:item|id|parent)|update|root|(?:un)?mount|mixin|is(?:Mounted|Loop)|tags|parent|opts|trigger|o(?:n|ff|ne))$/,
+  // SVG tags list https://www.w3.org/TR/SVG/attindex.html#PresentationAttributes
+  SVG_TAGS_LIST = ['altGlyph', 'animate', 'animateColor', 'circle', 'clipPath', 'defs', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feFlood', 'feGaussianBlur', 'feImage', 'feMerge', 'feMorphology', 'feOffset', 'feSpecularLighting', 'feTile', 'feTurbulence', 'filter', 'font', 'foreignObject', 'g', 'glyph', 'glyphRef', 'image', 'line', 'linearGradient', 'marker', 'mask', 'missing-glyph', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'switch', 'symbol', 'text', 'textPath', 'tref', 'tspan', 'use'],
+
+  // version# for IE 8-11, 0 for others
+  IE_VERSION = (window && window.document || {}).documentMode | 0,
+
+  // detect firefox to fix #1374
+  FIREFOX = window && !!window.InstallTrigger
+/* istanbul ignore next */
+riot.observable = function(el) {
+
+  /**
+   * Extend the original object or create a new empty one
+   * @type { Object }
+   */
+
+  el = el || {}
+
+  /**
+   * Private variables
+   */
+  var callbacks = {},
+    slice = Array.prototype.slice
+
+  /**
+   * Private Methods
+   */
+
+  /**
+   * Helper function needed to get and loop all the events in a string
+   * @param   { String }   e - event string
+   * @param   {Function}   fn - callback
+   */
+  function onEachEvent(e, fn) {
+    var es = e.split(' '), l = es.length, i = 0, name, indx
+    for (; i < l; i++) {
+      name = es[i]
+      indx = name.indexOf('.')
+      if (name) fn( ~indx ? name.substring(0, indx) : name, i, ~indx ? name.slice(indx + 1) : null)
+    }
+  }
+
+  /**
+   * Public Api
+   */
+
+  // extend the el object adding the observable methods
+  Object.defineProperties(el, {
+    /**
+     * Listen to the given space separated list of `events` and
+     * execute the `callback` each time an event is triggered.
+     * @param  { String } events - events ids
+     * @param  { Function } fn - callback function
+     * @returns { Object } el
+     */
+    on: {
+      value: function(events, fn) {
+        if (typeof fn != 'function')  return el
+
+        onEachEvent(events, function(name, pos, ns) {
+          (callbacks[name] = callbacks[name] || []).push(fn)
+          fn.typed = pos > 0
+          fn.ns = ns
+        })
+
+        return el
+      },
+      enumerable: false,
+      writable: false,
+      configurable: false
+    },
+
+    /**
+     * Removes the given space separated list of `events` listeners
+     * @param   { String } events - events ids
+     * @param   { Function } fn - callback function
+     * @returns { Object } el
+     */
+    off: {
+      value: function(events, fn) {
+        if (events == '*' && !fn) callbacks = {}
+        else {
+          onEachEvent(events, function(name, pos, ns) {
+            if (fn || ns) {
+              var arr = callbacks[name]
+              for (var i = 0, cb; cb = arr && arr[i]; ++i) {
+                if (cb == fn || ns && cb.ns == ns) arr.splice(i--, 1)
+              }
+            } else delete callbacks[name]
+          })
+        }
+        return el
+      },
+      enumerable: false,
+      writable: false,
+      configurable: false
+    },
+
+    /**
+     * Listen to the given space separated list of `events` and
+     * execute the `callback` at most once
+     * @param   { String } events - events ids
+     * @param   { Function } fn - callback function
+     * @returns { Object } el
+     */
+    one: {
+      value: function(events, fn) {
+        function on() {
+          el.off(events, on)
+          fn.apply(el, arguments)
+        }
+        return el.on(events, on)
+      },
+      enumerable: false,
+      writable: false,
+      configurable: false
+    },
+
+    /**
+     * Execute all callback functions that listen to
+     * the given space separated list of `events`
+     * @param   { String } events - events ids
+     * @returns { Object } el
+     */
+    trigger: {
+      value: function(events) {
+
+        // getting the arguments
+        var arglen = arguments.length - 1,
+          args = new Array(arglen),
+          fns
+
+        for (var i = 0; i < arglen; i++) {
+          args[i] = arguments[i + 1] // skip first argument
+        }
+
+        onEachEvent(events, function(name, pos, ns) {
+
+          fns = slice.call(callbacks[name] || [], 0)
+
+          for (var i = 0, fn; fn = fns[i]; ++i) {
+            if (fn.busy) continue
+            fn.busy = 1
+            if (!ns || fn.ns == ns) fn.apply(el, fn.typed ? [name].concat(args) : args)
+            if (fns[i] !== fn) { i-- }
+            fn.busy = 0
+          }
+
+          if (callbacks['*'] && name != '*')
+            el.trigger.apply(el, ['*', name].concat(args))
+
+        })
+
+        return el
+      },
+      enumerable: false,
+      writable: false,
+      configurable: false
+    }
+  })
+
+  return el
+
+}
+/* istanbul ignore next */
+;(function(riot) {
+
+/**
+ * Simple client-side router
+ * @module riot-route
+ */
+
+
+var RE_ORIGIN = /^.+?\/\/+[^\/]+/,
+  EVENT_LISTENER = 'EventListener',
+  REMOVE_EVENT_LISTENER = 'remove' + EVENT_LISTENER,
+  ADD_EVENT_LISTENER = 'add' + EVENT_LISTENER,
+  HAS_ATTRIBUTE = 'hasAttribute',
+  REPLACE = 'replace',
+  POPSTATE = 'popstate',
+  HASHCHANGE = 'hashchange',
+  TRIGGER = 'trigger',
+  MAX_EMIT_STACK_LEVEL = 3,
+  win = typeof window != 'undefined' && window,
+  doc = typeof document != 'undefined' && document,
+  hist = win && history,
+  loc = win && (hist.location || win.location), // see html5-history-api
+  prot = Router.prototype, // to minify more
+  clickEvent = doc && doc.ontouchstart ? 'touchstart' : 'click',
+  started = false,
+  central = riot.observable(),
+  routeFound = false,
+  debouncedEmit,
+  base, current, parser, secondParser, emitStack = [], emitStackLevel = 0
+
+/**
+ * Default parser. You can replace it via router.parser method.
+ * @param {string} path - current path (normalized)
+ * @returns {array} array
+ */
+function DEFAULT_PARSER(path) {
+  return path.split(/[/?#]/)
+}
+
+/**
+ * Default parser (second). You can replace it via router.parser method.
+ * @param {string} path - current path (normalized)
+ * @param {string} filter - filter string (normalized)
+ * @returns {array} array
+ */
+function DEFAULT_SECOND_PARSER(path, filter) {
+  var re = new RegExp('^' + filter[REPLACE](/\*/g, '([^/?#]+?)')[REPLACE](/\.\./, '.*') + '$'),
+    args = path.match(re)
+
+  if (args) return args.slice(1)
+}
+
+/**
+ * Simple/cheap debounce implementation
+ * @param   {function} fn - callback
+ * @param   {number} delay - delay in seconds
+ * @returns {function} debounced function
+ */
+function debounce(fn, delay) {
+  var t
+  return function () {
+    clearTimeout(t)
+    t = setTimeout(fn, delay)
+  }
+}
+
+/**
+ * Set the window listeners to trigger the routes
+ * @param {boolean} autoExec - see route.start
+ */
+function start(autoExec) {
+  debouncedEmit = debounce(emit, 1)
+  win[ADD_EVENT_LISTENER](POPSTATE, debouncedEmit)
+  win[ADD_EVENT_LISTENER](HASHCHANGE, debouncedEmit)
+  doc[ADD_EVENT_LISTENER](clickEvent, click)
+  if (autoExec) emit(true)
+}
+
+/**
+ * Router class
+ */
+function Router() {
+  this.$ = []
+  riot.observable(this) // make it observable
+  central.on('stop', this.s.bind(this))
+  central.on('emit', this.e.bind(this))
+}
+
+function normalize(path) {
+  return path[REPLACE](/^\/|\/$/, '')
+}
+
+function isString(str) {
+  return typeof str == 'string'
+}
+
+/**
+ * Get the part after domain name
+ * @param {string} href - fullpath
+ * @returns {string} path from root
+ */
+function getPathFromRoot(href) {
+  return (href || loc.href)[REPLACE](RE_ORIGIN, '')
+}
+
+/**
+ * Get the part after base
+ * @param {string} href - fullpath
+ * @returns {string} path from base
+ */
+function getPathFromBase(href) {
+  return base[0] == '#'
+    ? (href || loc.href || '').split(base)[1] || ''
+    : (loc ? getPathFromRoot(href) : href || '')[REPLACE](base, '')
+}
+
+function emit(force) {
+  // the stack is needed for redirections
+  var isRoot = emitStackLevel == 0
+  if (MAX_EMIT_STACK_LEVEL <= emitStackLevel) return
+
+  emitStackLevel++
+  emitStack.push(function() {
+    var path = getPathFromBase()
+    if (force || path != current) {
+      central[TRIGGER]('emit', path)
+      current = path
+    }
+  })
+  if (isRoot) {
+    while (emitStack.length) {
+      emitStack[0]()
+      emitStack.shift()
+    }
+    emitStackLevel = 0
+  }
+}
+
+function click(e) {
+  if (
+    e.which != 1 // not left click
+    || e.metaKey || e.ctrlKey || e.shiftKey // or meta keys
+    || e.defaultPrevented // or default prevented
+  ) return
+
+  var el = e.target
+  while (el && el.nodeName != 'A') el = el.parentNode
+
+  if (
+    !el || el.nodeName != 'A' // not A tag
+    || el[HAS_ATTRIBUTE]('download') // has download attr
+    || !el[HAS_ATTRIBUTE]('href') // has no href attr
+    || el.target && el.target != '_self' // another window or frame
+    || el.href.indexOf(loc.href.match(RE_ORIGIN)[0]) == -1 // cross origin
+  ) return
+
+  if (el.href != loc.href) {
+    if (
+      el.href.split('#')[0] == loc.href.split('#')[0] // internal jump
+      || base != '#' && getPathFromRoot(el.href).indexOf(base) !== 0 // outside of base
+      || !go(getPathFromBase(el.href), el.title || doc.title) // route not found
+    ) return
+  }
+
+  e.preventDefault()
+}
+
+/**
+ * Go to the path
+ * @param {string} path - destination path
+ * @param {string} title - page title
+ * @param {boolean} shouldReplace - use replaceState or pushState
+ * @returns {boolean} - route not found flag
+ */
+function go(path, title, shouldReplace) {
+  if (hist) { // if a browser
+    path = base + normalize(path)
+    title = title || doc.title
+    // browsers ignores the second parameter `title`
+    shouldReplace
+      ? hist.replaceState(null, title, path)
+      : hist.pushState(null, title, path)
+    // so we need to set it manually
+    doc.title = title
+    routeFound = false
+    emit()
+    return routeFound
+  }
+
+  // Server-side usage: directly execute handlers for the path
+  return central[TRIGGER]('emit', getPathFromBase(path))
+}
+
+/**
+ * Go to path or set action
+ * a single string:                go there
+ * two strings:                    go there with setting a title
+ * two strings and boolean:        replace history with setting a title
+ * a single function:              set an action on the default route
+ * a string/RegExp and a function: set an action on the route
+ * @param {(string|function)} first - path / action / filter
+ * @param {(string|RegExp|function)} second - title / action
+ * @param {boolean} third - replace flag
+ */
+prot.m = function(first, second, third) {
+  if (isString(first) && (!second || isString(second))) go(first, second, third || false)
+  else if (second) this.r(first, second)
+  else this.r('@', first)
+}
+
+/**
+ * Stop routing
+ */
+prot.s = function() {
+  this.off('*')
+  this.$ = []
+}
+
+/**
+ * Emit
+ * @param {string} path - path
+ */
+prot.e = function(path) {
+  this.$.concat('@').some(function(filter) {
+    var args = (filter == '@' ? parser : secondParser)(normalize(path), normalize(filter))
+    if (typeof args != 'undefined') {
+      this[TRIGGER].apply(null, [filter].concat(args))
+      return routeFound = true // exit from loop
+    }
+  }, this)
+}
+
+/**
+ * Register route
+ * @param {string} filter - filter for matching to url
+ * @param {function} action - action to register
+ */
+prot.r = function(filter, action) {
+  if (filter != '@') {
+    filter = '/' + normalize(filter)
+    this.$.push(filter)
+  }
+  this.on(filter, action)
+}
+
+var mainRouter = new Router()
+var route = mainRouter.m.bind(mainRouter)
+
+/**
+ * Create a sub router
+ * @returns {function} the method of a new Router object
+ */
+route.create = function() {
+  var newSubRouter = new Router()
+  // assign sub-router's main method
+  var router = newSubRouter.m.bind(newSubRouter)
+  // stop only this sub-router
+  router.stop = newSubRouter.s.bind(newSubRouter)
+  return router
+}
+
+/**
+ * Set the base of url
+ * @param {(str|RegExp)} arg - a new base or '#' or '#!'
+ */
+route.base = function(arg) {
+  base = arg || '#'
+  current = getPathFromBase() // recalculate current path
+}
+
+/** Exec routing right now **/
+route.exec = function() {
+  emit(true)
+}
+
+/**
+ * Replace the default router to yours
+ * @param {function} fn - your parser function
+ * @param {function} fn2 - your secondParser function
+ */
+route.parser = function(fn, fn2) {
+  if (!fn && !fn2) {
+    // reset parser for testing...
+    parser = DEFAULT_PARSER
+    secondParser = DEFAULT_SECOND_PARSER
+  }
+  if (fn) parser = fn
+  if (fn2) secondParser = fn2
+}
+
+/**
+ * Helper function to get url query as an object
+ * @returns {object} parsed query
+ */
+route.query = function() {
+  var q = {}
+  var href = loc.href || current
+  href[REPLACE](/[?&](.+?)=([^&]*)/g, function(_, k, v) { q[k] = v })
+  return q
+}
+
+/** Stop routing **/
+route.stop = function () {
+  if (started) {
+    if (win) {
+      win[REMOVE_EVENT_LISTENER](POPSTATE, debouncedEmit)
+      win[REMOVE_EVENT_LISTENER](HASHCHANGE, debouncedEmit)
+      doc[REMOVE_EVENT_LISTENER](clickEvent, click)
+    }
+    central[TRIGGER]('stop')
+    started = false
+  }
+}
+
+/**
+ * Start routing
+ * @param {boolean} autoExec - automatically exec after starting if true
+ */
+route.start = function (autoExec) {
+  if (!started) {
+    if (win) {
+      if (document.readyState == 'complete') start(autoExec)
+      // the timeout is needed to solve
+      // a weird safari bug https://github.com/riot/route/issues/33
+      else win[ADD_EVENT_LISTENER]('load', function() {
+        setTimeout(function() { start(autoExec) }, 1)
+      })
+    }
+    started = true
+  }
+}
+
+/** Prepare the router **/
+route.base()
+route.parser()
+
+riot.route = route
+})(riot)
+/* istanbul ignore next */
+
+/**
+ * The riot template engine
+ * @version v2.4.0
+ */
+/**
+ * riot.util.brackets
+ *
+ * - `brackets    ` - Returns a string or regex based on its parameter
+ * - `brackets.set` - Change the current riot brackets
+ *
+ * @module
+ */
+
+var brackets = (function (UNDEF) {
+
+  var
+    REGLOB = 'g',
+
+    R_MLCOMMS = /\/\*[^*]*\*+(?:[^*\/][^*]*\*+)*\//g,
+
+    R_STRINGS = /"[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'/g,
+
+    S_QBLOCKS = R_STRINGS.source + '|' +
+      /(?:\breturn\s+|(?:[$\w\)\]]|\+\+|--)\s*(\/)(?![*\/]))/.source + '|' +
+      /\/(?=[^*\/])[^[\/\\]*(?:(?:\[(?:\\.|[^\]\\]*)*\]|\\.)[^[\/\\]*)*?(\/)[gim]*/.source,
+
+    FINDBRACES = {
+      '(': RegExp('([()])|'   + S_QBLOCKS, REGLOB),
+      '[': RegExp('([[\\]])|' + S_QBLOCKS, REGLOB),
+      '{': RegExp('([{}])|'   + S_QBLOCKS, REGLOB)
+    },
+
+    DEFAULT = '{ }'
+
+  var _pairs = [
+    '{', '}',
+    '{', '}',
+    /{[^}]*}/,
+    /\\([{}])/g,
+    /\\({)|{/g,
+    RegExp('\\\\(})|([[({])|(})|' + S_QBLOCKS, REGLOB),
+    DEFAULT,
+    /^\s*{\^?\s*([$\w]+)(?:\s*,\s*(\S+))?\s+in\s+(\S.*)\s*}/,
+    /(^|[^\\]){=[\S\s]*?}/
+  ]
+
+  var
+    cachedBrackets = UNDEF,
+    _regex,
+    _cache = [],
+    _settings
+
+  function _loopback (re) { return re }
+
+  function _rewrite (re, bp) {
+    if (!bp) bp = _cache
+    return new RegExp(
+      re.source.replace(/{/g, bp[2]).replace(/}/g, bp[3]), re.global ? REGLOB : ''
+    )
+  }
+
+  function _create (pair) {
+    if (pair === DEFAULT) return _pairs
+
+    var arr = pair.split(' ')
+
+    if (arr.length !== 2 || /[\x00-\x1F<>a-zA-Z0-9'",;\\]/.test(pair)) { // eslint-disable-line
+      throw new Error('Unsupported brackets "' + pair + '"')
+    }
+    arr = arr.concat(pair.replace(/(?=[[\]()*+?.^$|])/g, '\\').split(' '))
+
+    arr[4] = _rewrite(arr[1].length > 1 ? /{[\S\s]*?}/ : _pairs[4], arr)
+    arr[5] = _rewrite(pair.length > 3 ? /\\({|})/g : _pairs[5], arr)
+    arr[6] = _rewrite(_pairs[6], arr)
+    arr[7] = RegExp('\\\\(' + arr[3] + ')|([[({])|(' + arr[3] + ')|' + S_QBLOCKS, REGLOB)
+    arr[8] = pair
+    return arr
+  }
+
+  function _brackets (reOrIdx) {
+    return reOrIdx instanceof RegExp ? _regex(reOrIdx) : _cache[reOrIdx]
+  }
+
+  _brackets.split = function split (str, tmpl, _bp) {
+    // istanbul ignore next: _bp is for the compiler
+    if (!_bp) _bp = _cache
+
+    var
+      parts = [],
+      match,
+      isexpr,
+      start,
+      pos,
+      re = _bp[6]
+
+    isexpr = start = re.lastIndex = 0
+
+    while ((match = re.exec(str))) {
+
+      pos = match.index
+
+      if (isexpr) {
+
+        if (match[2]) {
+          re.lastIndex = skipBraces(str, match[2], re.lastIndex)
+          continue
+        }
+        if (!match[3]) {
+          continue
+        }
+      }
+
+      if (!match[1]) {
+        unescapeStr(str.slice(start, pos))
+        start = re.lastIndex
+        re = _bp[6 + (isexpr ^= 1)]
+        re.lastIndex = start
+      }
+    }
+
+    if (str && start < str.length) {
+      unescapeStr(str.slice(start))
+    }
+
+    return parts
+
+    function unescapeStr (s) {
+      if (tmpl || isexpr) {
+        parts.push(s && s.replace(_bp[5], '$1'))
+      } else {
+        parts.push(s)
+      }
+    }
+
+    function skipBraces (s, ch, ix) {
+      var
+        match,
+        recch = FINDBRACES[ch]
+
+      recch.lastIndex = ix
+      ix = 1
+      while ((match = recch.exec(s))) {
+        if (match[1] &&
+          !(match[1] === ch ? ++ix : --ix)) break
+      }
+      return ix ? s.length : recch.lastIndex
+    }
+  }
+
+  _brackets.hasExpr = function hasExpr (str) {
+    return _cache[4].test(str)
+  }
+
+  _brackets.loopKeys = function loopKeys (expr) {
+    var m = expr.match(_cache[9])
+
+    return m
+      ? { key: m[1], pos: m[2], val: _cache[0] + m[3].trim() + _cache[1] }
+      : { val: expr.trim() }
+  }
+
+  _brackets.array = function array (pair) {
+    return pair ? _create(pair) : _cache
+  }
+
+  function _reset (pair) {
+    if ((pair || (pair = DEFAULT)) !== _cache[8]) {
+      _cache = _create(pair)
+      _regex = pair === DEFAULT ? _loopback : _rewrite
+      _cache[9] = _regex(_pairs[9])
+    }
+    cachedBrackets = pair
+  }
+
+  function _setSettings (o) {
+    var b
+
+    o = o || {}
+    b = o.brackets
+    Object.defineProperty(o, 'brackets', {
+      set: _reset,
+      get: function () { return cachedBrackets },
+      enumerable: true
+    })
+    _settings = o
+    _reset(b)
+  }
+
+  Object.defineProperty(_brackets, 'settings', {
+    set: _setSettings,
+    get: function () { return _settings }
+  })
+
+  /* istanbul ignore next: in the browser riot is always in the scope */
+  _brackets.settings = typeof riot !== 'undefined' && riot.settings || {}
+  _brackets.set = _reset
+
+  _brackets.R_STRINGS = R_STRINGS
+  _brackets.R_MLCOMMS = R_MLCOMMS
+  _brackets.S_QBLOCKS = S_QBLOCKS
+
+  return _brackets
+
+})()
+
+/**
+ * @module tmpl
+ *
+ * tmpl          - Root function, returns the template value, render with data
+ * tmpl.hasExpr  - Test the existence of a expression inside a string
+ * tmpl.loopKeys - Get the keys for an 'each' loop (used by `_each`)
+ */
+
+var tmpl = (function () {
+
+  var _cache = {}
+
+  function _tmpl (str, data) {
+    if (!str) return str
+
+    return (_cache[str] || (_cache[str] = _create(str))).call(data, _logErr)
+  }
+
+  _tmpl.haveRaw = brackets.hasRaw
+
+  _tmpl.hasExpr = brackets.hasExpr
+
+  _tmpl.loopKeys = brackets.loopKeys
+
+  _tmpl.errorHandler = null
+
+  function _logErr (err, ctx) {
+
+    if (_tmpl.errorHandler) {
+
+      err.riotData = {
+        tagName: ctx && ctx.root && ctx.root.tagName,
+        _riot_id: ctx && ctx._riot_id  //eslint-disable-line camelcase
+      }
+      _tmpl.errorHandler(err)
+    }
+  }
+
+  function _create (str) {
+    var expr = _getTmpl(str)
+
+    if (expr.slice(0, 11) !== 'try{return ') expr = 'return ' + expr
+
+/* eslint-disable */
+
+    return new Function('E', expr + ';')
+/* eslint-enable */
+  }
+
+  var
+    CH_IDEXPR = '\u2057',
+    RE_CSNAME = /^(?:(-?[_A-Za-z\xA0-\xFF][-\w\xA0-\xFF]*)|\u2057(\d+)~):/,
+    RE_QBLOCK = RegExp(brackets.S_QBLOCKS, 'g'),
+    RE_DQUOTE = /\u2057/g,
+    RE_QBMARK = /\u2057(\d+)~/g
+
+  function _getTmpl (str) {
+    var
+      qstr = [],
+      expr,
+      parts = brackets.split(str.replace(RE_DQUOTE, '"'), 1)
+
+    if (parts.length > 2 || parts[0]) {
+      var i, j, list = []
+
+      for (i = j = 0; i < parts.length; ++i) {
+
+        expr = parts[i]
+
+        if (expr && (expr = i & 1
+
+            ? _parseExpr(expr, 1, qstr)
+
+            : '"' + expr
+                .replace(/\\/g, '\\\\')
+                .replace(/\r\n?|\n/g, '\\n')
+                .replace(/"/g, '\\"') +
+              '"'
+
+          )) list[j++] = expr
+
+      }
+
+      expr = j < 2 ? list[0]
+           : '[' + list.join(',') + '].join("")'
+
+    } else {
+
+      expr = _parseExpr(parts[1], 0, qstr)
+    }
+
+    if (qstr[0]) {
+      expr = expr.replace(RE_QBMARK, function (_, pos) {
+        return qstr[pos]
+          .replace(/\r/g, '\\r')
+          .replace(/\n/g, '\\n')
+      })
+    }
+    return expr
+  }
+
+  var
+    RE_BREND = {
+      '(': /[()]/g,
+      '[': /[[\]]/g,
+      '{': /[{}]/g
+    }
+
+  function _parseExpr (expr, asText, qstr) {
+
+    expr = expr
+          .replace(RE_QBLOCK, function (s, div) {
+            return s.length > 2 && !div ? CH_IDEXPR + (qstr.push(s) - 1) + '~' : s
+          })
+          .replace(/\s+/g, ' ').trim()
+          .replace(/\ ?([[\({},?\.:])\ ?/g, '$1')
+
+    if (expr) {
+      var
+        list = [],
+        cnt = 0,
+        match
+
+      while (expr &&
+            (match = expr.match(RE_CSNAME)) &&
+            !match.index
+        ) {
+        var
+          key,
+          jsb,
+          re = /,|([[{(])|$/g
+
+        expr = RegExp.rightContext
+        key  = match[2] ? qstr[match[2]].slice(1, -1).trim().replace(/\s+/g, ' ') : match[1]
+
+        while (jsb = (match = re.exec(expr))[1]) skipBraces(jsb, re)
+
+        jsb  = expr.slice(0, match.index)
+        expr = RegExp.rightContext
+
+        list[cnt++] = _wrapExpr(jsb, 1, key)
+      }
+
+      expr = !cnt ? _wrapExpr(expr, asText)
+           : cnt > 1 ? '[' + list.join(',') + '].join(" ").trim()' : list[0]
+    }
+    return expr
+
+    function skipBraces (ch, re) {
+      var
+        mm,
+        lv = 1,
+        ir = RE_BREND[ch]
+
+      ir.lastIndex = re.lastIndex
+      while (mm = ir.exec(expr)) {
+        if (mm[0] === ch) ++lv
+        else if (!--lv) break
+      }
+      re.lastIndex = lv ? expr.length : ir.lastIndex
+    }
+  }
+
+  // istanbul ignore next: not both
+  var // eslint-disable-next-line max-len
+    JS_CONTEXT = '"in this?this:' + (typeof window !== 'object' ? 'global' : 'window') + ').',
+    JS_VARNAME = /[,{][$\w]+:|(^ *|[^$\w\.])(?!(?:typeof|true|false|null|undefined|in|instanceof|is(?:Finite|NaN)|void|NaN|new|Date|RegExp|Math)(?![$\w]))([$_A-Za-z][$\w]*)/g,
+    JS_NOPROPS = /^(?=(\.[$\w]+))\1(?:[^.[(]|$)/
+
+  function _wrapExpr (expr, asText, key) {
+    var tb
+
+    expr = expr.replace(JS_VARNAME, function (match, p, mvar, pos, s) {
+      if (mvar) {
+        pos = tb ? 0 : pos + match.length
+
+        if (mvar !== 'this' && mvar !== 'global' && mvar !== 'window') {
+          match = p + '("' + mvar + JS_CONTEXT + mvar
+          if (pos) tb = (s = s[pos]) === '.' || s === '(' || s === '['
+        } else if (pos) {
+          tb = !JS_NOPROPS.test(s.slice(pos))
+        }
+      }
+      return match
+    })
+
+    if (tb) {
+      expr = 'try{return ' + expr + '}catch(e){E(e,this)}'
+    }
+
+    if (key) {
+
+      expr = (tb
+          ? 'function(){' + expr + '}.call(this)' : '(' + expr + ')'
+        ) + '?"' + key + '":""'
+
+    } else if (asText) {
+
+      expr = 'function(v){' + (tb
+          ? expr.replace('return ', 'v=') : 'v=(' + expr + ')'
+        ) + ';return v||v===0?v:""}.call(this)'
+    }
+
+    return expr
+  }
+
+  // istanbul ignore next: compatibility fix for beta versions
+  _tmpl.parse = function (s) { return s }
+
+  _tmpl.version = brackets.version = 'v2.4.0'
+
+  return _tmpl
+
+})()
+
+/*
+  lib/browser/tag/mkdom.js
+
+  Includes hacks needed for the Internet Explorer version 9 and below
+  See: http://kangax.github.io/compat-table/es5/#ie8
+       http://codeplanet.io/dropping-ie8/
+*/
+var mkdom = (function _mkdom() {
+  var
+    reHasYield  = /<yield\b/i,
+    reYieldAll  = /<yield\s*(?:\/>|>([\S\s]*?)<\/yield\s*>|>)/ig,
+    reYieldSrc  = /<yield\s+to=['"]([^'">]*)['"]\s*>([\S\s]*?)<\/yield\s*>/ig,
+    reYieldDest = /<yield\s+from=['"]?([-\w]+)['"]?\s*(?:\/>|>([\S\s]*?)<\/yield\s*>)/ig
+  var
+    rootEls = { tr: 'tbody', th: 'tr', td: 'tr', col: 'colgroup' },
+    tblTags = IE_VERSION && IE_VERSION < 10
+      ? SPECIAL_TAGS_REGEX : /^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?)$/
+
+  /**
+   * Creates a DOM element to wrap the given content. Normally an `DIV`, but can be
+   * also a `TABLE`, `SELECT`, `TBODY`, `TR`, or `COLGROUP` element.
+   *
+   * @param   {string} templ  - The template coming from the custom tag definition
+   * @param   {string} [html] - HTML content that comes from the DOM element where you
+   *           will mount the tag, mostly the original tag in the page
+   * @returns {HTMLElement} DOM element with _templ_ merged through `YIELD` with the _html_.
+   */
+  function _mkdom(templ, html) {
+    var
+      match   = templ && templ.match(/^\s*<([-\w]+)/),
+      tagName = match && match[1].toLowerCase(),
+      el = mkEl('div', isSVGTag(tagName))
+
+    // replace all the yield tags with the tag inner html
+    templ = replaceYield(templ, html)
+
+    /* istanbul ignore next */
+    if (tblTags.test(tagName))
+      el = specialTags(el, templ, tagName)
+    else
+      setInnerHTML(el, templ)
+
+    el.stub = true
+
+    return el
+  }
+
+  /*
+    Creates the root element for table or select child elements:
+    tr/th/td/thead/tfoot/tbody/caption/col/colgroup/option/optgroup
+  */
+  function specialTags(el, templ, tagName) {
+    var
+      select = tagName[0] === 'o',
+      parent = select ? 'select>' : 'table>'
+
+    // trim() is important here, this ensures we don't have artifacts,
+    // so we can check if we have only one element inside the parent
+    el.innerHTML = '<' + parent + templ.trim() + '</' + parent
+    parent = el.firstChild
+
+    // returns the immediate parent if tr/th/td/col is the only element, if not
+    // returns the whole tree, as this can include additional elements
+    if (select) {
+      parent.selectedIndex = -1  // for IE9, compatible w/current riot behavior
+    } else {
+      // avoids insertion of cointainer inside container (ex: tbody inside tbody)
+      var tname = rootEls[tagName]
+      if (tname && parent.childElementCount === 1) parent = $(tname, parent)
+    }
+    return parent
+  }
+
+  /*
+    Replace the yield tag from any tag template with the innerHTML of the
+    original tag in the page
+  */
+  function replaceYield(templ, html) {
+    // do nothing if no yield
+    if (!reHasYield.test(templ)) return templ
+
+    // be careful with #1343 - string on the source having `$1`
+    var src = {}
+
+    html = html && html.replace(reYieldSrc, function (_, ref, text) {
+      src[ref] = src[ref] || text   // preserve first definition
+      return ''
+    }).trim()
+
+    return templ
+      .replace(reYieldDest, function (_, ref, def) {  // yield with from - to attrs
+        return src[ref] || def || ''
+      })
+      .replace(reYieldAll, function (_, def) {        // yield without any "from"
+        return html || def || ''
+      })
+  }
+
+  return _mkdom
+
+})()
+
+/**
+ * Convert the item looped into an object used to extend the child tag properties
+ * @param   { Object } expr - object containing the keys used to extend the children tags
+ * @param   { * } key - value to assign to the new object returned
+ * @param   { * } val - value containing the position of the item in the array
+ * @returns { Object } - new object containing the values of the original item
+ *
+ * The variables 'key' and 'val' are arbitrary.
+ * They depend on the collection type looped (Array, Object)
+ * and on the expression used on the each tag
+ *
+ */
+function mkitem(expr, key, val) {
+  var item = {}
+  item[expr.key] = key
+  if (expr.pos) item[expr.pos] = val
+  return item
+}
+
+/**
+ * Unmount the redundant tags
+ * @param   { Array } items - array containing the current items to loop
+ * @param   { Array } tags - array containing all the children tags
+ */
+function unmountRedundant(items, tags) {
+
+  var i = tags.length,
+    j = items.length,
+    t
+
+  while (i > j) {
+    t = tags[--i]
+    tags.splice(i, 1)
+    t.unmount()
+  }
+}
+
+/**
+ * Move the nested custom tags in non custom loop tags
+ * @param   { Object } child - non custom loop tag
+ * @param   { Number } i - current position of the loop tag
+ */
+function moveNestedTags(child, i) {
+  Object.keys(child.tags).forEach(function(tagName) {
+    var tag = child.tags[tagName]
+    if (isArray(tag))
+      each(tag, function (t) {
+        moveChildTag(t, tagName, i)
+      })
+    else
+      moveChildTag(tag, tagName, i)
+  })
+}
+
+/**
+ * Adds the elements for a virtual tag
+ * @param { Tag } tag - the tag whose root's children will be inserted or appended
+ * @param { Node } src - the node that will do the inserting or appending
+ * @param { Tag } target - only if inserting, insert before this tag's first child
+ */
+function addVirtual(tag, src, target) {
+  var el = tag._root, sib
+  tag._virts = []
+  while (el) {
+    sib = el.nextSibling
+    if (target)
+      src.insertBefore(el, target._root)
+    else
+      src.appendChild(el)
+
+    tag._virts.push(el) // hold for unmounting
+    el = sib
+  }
+}
+
+/**
+ * Move virtual tag and all child nodes
+ * @param { Tag } tag - first child reference used to start move
+ * @param { Node } src  - the node that will do the inserting
+ * @param { Tag } target - insert before this tag's first child
+ * @param { Number } len - how many child nodes to move
+ */
+function moveVirtual(tag, src, target, len) {
+  var el = tag._root, sib, i = 0
+  for (; i < len; i++) {
+    sib = el.nextSibling
+    src.insertBefore(el, target._root)
+    el = sib
+  }
+}
+
+
+/**
+ * Manage tags having the 'each'
+ * @param   { Object } dom - DOM node we need to loop
+ * @param   { Tag } parent - parent tag instance where the dom node is contained
+ * @param   { String } expr - string contained in the 'each' attribute
+ */
+function _each(dom, parent, expr) {
+
+  // remove the each property from the original tag
+  remAttr(dom, 'each')
+
+  var mustReorder = typeof getAttr(dom, 'no-reorder') !== T_STRING || remAttr(dom, 'no-reorder'),
+    tagName = getTagName(dom),
+    impl = __tagImpl[tagName] || { tmpl: getOuterHTML(dom) },
+    useRoot = SPECIAL_TAGS_REGEX.test(tagName),
+    root = dom.parentNode,
+    ref = document.createTextNode(''),
+    child = getTag(dom),
+    isOption = tagName.toLowerCase() === 'option', // the option tags must be treated differently
+    tags = [],
+    oldItems = [],
+    hasKeys,
+    isVirtual = dom.tagName == 'VIRTUAL'
+
+  // parse the each expression
+  expr = tmpl.loopKeys(expr)
+
+  // insert a marked where the loop tags will be injected
+  root.insertBefore(ref, dom)
+
+  // clean template code
+  parent.one('before-mount', function () {
+
+    // remove the original DOM node
+    dom.parentNode.removeChild(dom)
+    if (root.stub) root = parent.root
+
+  }).on('update', function () {
+    // get the new items collection
+    var items = tmpl(expr.val, parent),
+      // create a fragment to hold the new DOM nodes to inject in the parent tag
+      frag = document.createDocumentFragment()
+
+    // object loop. any changes cause full redraw
+    if (!isArray(items)) {
+      hasKeys = items || false
+      items = hasKeys ?
+        Object.keys(items).map(function (key) {
+          return mkitem(expr, key, items[key])
+        }) : []
+    }
+
+    // loop all the new items
+    var i = 0,
+      itemsLength = items.length
+
+    for (; i < itemsLength; i++) {
+      // reorder only if the items are objects
+      var
+        item = items[i],
+        _mustReorder = mustReorder && typeof item == T_OBJECT && !hasKeys,
+        oldPos = oldItems.indexOf(item),
+        pos = ~oldPos && _mustReorder ? oldPos : i,
+        // does a tag exist in this position?
+        tag = tags[pos]
+
+      item = !hasKeys && expr.key ? mkitem(expr, item, i) : item
+
+      // new tag
+      if (
+        !_mustReorder && !tag // with no-reorder we just update the old tags
+        ||
+        _mustReorder && !~oldPos || !tag // by default we always try to reorder the DOM elements
+      ) {
+
+        tag = new Tag(impl, {
+          parent: parent,
+          isLoop: true,
+          hasImpl: !!__tagImpl[tagName],
+          root: useRoot ? root : dom.cloneNode(),
+          item: item
+        }, dom.innerHTML)
+
+        tag.mount()
+
+        if (isVirtual) tag._root = tag.root.firstChild // save reference for further moves or inserts
+        // this tag must be appended
+        if (i == tags.length || !tags[i]) { // fix 1581
+          if (isVirtual)
+            addVirtual(tag, frag)
+          else frag.appendChild(tag.root)
+        }
+        // this tag must be insert
+        else {
+          if (isVirtual)
+            addVirtual(tag, root, tags[i])
+          else root.insertBefore(tag.root, tags[i].root) // #1374 some browsers reset selected here
+          oldItems.splice(i, 0, item)
+        }
+
+        tags.splice(i, 0, tag)
+        pos = i // handled here so no move
+      } else tag.update(item, true)
+
+      // reorder the tag if it's not located in its previous position
+      if (
+        pos !== i && _mustReorder &&
+        tags[i] // fix 1581 unable to reproduce it in a test!
+      ) {
+        // update the DOM
+        if (isVirtual)
+          moveVirtual(tag, root, tags[i], dom.childNodes.length)
+        else root.insertBefore(tag.root, tags[i].root)
+        // update the position attribute if it exists
+        if (expr.pos)
+          tag[expr.pos] = i
+        // move the old tag instance
+        tags.splice(i, 0, tags.splice(pos, 1)[0])
+        // move the old item
+        oldItems.splice(i, 0, oldItems.splice(pos, 1)[0])
+        // if the loop tags are not custom
+        // we need to move all their custom tags into the right position
+        if (!child && tag.tags) moveNestedTags(tag, i)
+      }
+
+      // cache the original item to use it in the events bound to this node
+      // and its children
+      tag._item = item
+      // cache the real parent tag internally
+      defineProperty(tag, '_parent', parent)
+    }
+
+    // remove the redundant tags
+    unmountRedundant(items, tags)
+
+    // insert the new nodes
+    root.insertBefore(frag, ref)
+    if (isOption) {
+
+      // #1374 FireFox bug in <option selected={expression}>
+      if (FIREFOX && !root.multiple) {
+        for (var n = 0; n < root.length; n++) {
+          if (root[n].__riot1374) {
+            root.selectedIndex = n  // clear other options
+            delete root[n].__riot1374
+            break
+          }
+        }
+      }
+    }
+
+    // set the 'tags' property of the parent tag
+    // if child is 'undefined' it means that we don't need to set this property
+    // for example:
+    // we don't need store the `myTag.tags['div']` property if we are looping a div tag
+    // but we need to track the `myTag.tags['child']` property looping a custom child node named `child`
+    if (child) parent.tags[tagName] = tags
+
+    // clone the items array
+    oldItems = items.slice()
+
+  })
+
+}
+/**
+ * Object that will be used to inject and manage the css of every tag instance
+ */
+var styleManager = (function(_riot) {
+
+  if (!window) return { // skip injection on the server
+    add: function () {},
+    inject: function () {}
+  }
+
+  var styleNode = (function () {
+    // create a new style element with the correct type
+    var newNode = mkEl('style')
+    setAttr(newNode, 'type', 'text/css')
+
+    // replace any user node or insert the new one into the head
+    var userNode = $('style[type=riot]')
+    if (userNode) {
+      if (userNode.id) newNode.id = userNode.id
+      userNode.parentNode.replaceChild(newNode, userNode)
+    }
+    else document.getElementsByTagName('head')[0].appendChild(newNode)
+
+    return newNode
+  })()
+
+  // Create cache and shortcut to the correct property
+  var cssTextProp = styleNode.styleSheet,
+    stylesToInject = ''
+
+  // Expose the style node in a non-modificable property
+  Object.defineProperty(_riot, 'styleNode', {
+    value: styleNode,
+    writable: true
+  })
+
+  /**
+   * Public api
+   */
+  return {
+    /**
+     * Save a tag style to be later injected into DOM
+     * @param   { String } css [description]
+     */
+    add: function(css) {
+      stylesToInject += css
+    },
+    /**
+     * Inject all previously saved tag styles into DOM
+     * innerHTML seems slow: http://jsperf.com/riot-insert-style
+     */
+    inject: function() {
+      if (stylesToInject) {
+        if (cssTextProp) cssTextProp.cssText += stylesToInject
+        else styleNode.innerHTML += stylesToInject
+        stylesToInject = ''
+      }
+    }
+  }
+
+})(riot)
+
+
+function parseNamedElements(root, tag, childTags, forceParsingNamed) {
+
+  walk(root, function(dom) {
+    if (dom.nodeType == 1) {
+      dom.isLoop = dom.isLoop ||
+                  (dom.parentNode && dom.parentNode.isLoop || getAttr(dom, 'each'))
+                    ? 1 : 0
+
+      // custom child tag
+      if (childTags) {
+        var child = getTag(dom)
+
+        if (child && !dom.isLoop)
+          childTags.push(initChildTag(child, {root: dom, parent: tag}, dom.innerHTML, tag))
+      }
+
+      if (!dom.isLoop || forceParsingNamed)
+        setNamed(dom, tag, [])
+    }
+
+  })
+
+}
+
+function parseExpressions(root, tag, expressions) {
+
+  function addExpr(dom, val, extra) {
+    if (tmpl.hasExpr(val)) {
+      expressions.push(extend({ dom: dom, expr: val }, extra))
+    }
+  }
+
+  walk(root, function(dom) {
+    var type = dom.nodeType,
+      attr
+
+    // text node
+    if (type == 3 && dom.parentNode.tagName != 'STYLE') addExpr(dom, dom.nodeValue)
+    if (type != 1) return
+
+    /* element */
+
+    // loop
+    attr = getAttr(dom, 'each')
+
+    if (attr) { _each(dom, tag, attr); return false }
+
+    // attribute expressions
+    each(dom.attributes, function(attr) {
+      var name = attr.name,
+        bool = name.split('__')[1]
+
+      addExpr(dom, attr.value, { attr: bool || name, bool: bool })
+      if (bool) { remAttr(dom, name); return false }
+
+    })
+
+    // skip custom tags
+    if (getTag(dom)) return false
+
+  })
+
+}
+function Tag(impl, conf, innerHTML) {
+
+  var self = riot.observable(this),
+    opts = inherit(conf.opts) || {},
+    parent = conf.parent,
+    isLoop = conf.isLoop,
+    hasImpl = conf.hasImpl,
+    item = cleanUpData(conf.item),
+    expressions = [],
+    childTags = [],
+    root = conf.root,
+    tagName = root.tagName.toLowerCase(),
+    attr = {},
+    propsInSyncWithParent = [],
+    dom
+
+  // only call unmount if we have a valid __tagImpl (has name property)
+  if (impl.name && root._tag) root._tag.unmount(true)
+
+  // not yet mounted
+  this.isMounted = false
+  root.isLoop = isLoop
+
+  // keep a reference to the tag just created
+  // so we will be able to mount this tag multiple times
+  root._tag = this
+
+  // create a unique id to this tag
+  // it could be handy to use it also to improve the virtual dom rendering speed
+  defineProperty(this, '_riot_id', ++__uid) // base 1 allows test !t._riot_id
+
+  extend(this, { parent: parent, root: root, opts: opts}, item)
+  // protect the "tags" property from being overridden
+  defineProperty(this, 'tags', {})
+
+  // grab attributes
+  each(root.attributes, function(el) {
+    var val = el.value
+    // remember attributes with expressions only
+    if (tmpl.hasExpr(val)) attr[el.name] = val
+  })
+
+  dom = mkdom(impl.tmpl, innerHTML)
+
+  // options
+  function updateOpts() {
+    var ctx = hasImpl && isLoop ? self : parent || self
+
+    // update opts from current DOM attributes
+    each(root.attributes, function(el) {
+      var val = el.value
+      opts[toCamel(el.name)] = tmpl.hasExpr(val) ? tmpl(val, ctx) : val
+    })
+    // recover those with expressions
+    each(Object.keys(attr), function(name) {
+      opts[toCamel(name)] = tmpl(attr[name], ctx)
+    })
+  }
+
+  function normalizeData(data) {
+    for (var key in item) {
+      if (typeof self[key] !== T_UNDEF && isWritable(self, key))
+        self[key] = data[key]
+    }
+  }
+
+  function inheritFromParent () {
+    if (!self.parent || !isLoop) return
+    each(Object.keys(self.parent), function(k) {
+      // some properties must be always in sync with the parent tag
+      var mustSync = !RESERVED_WORDS_BLACKLIST.test(k) && contains(propsInSyncWithParent, k)
+      if (typeof self[k] === T_UNDEF || mustSync) {
+        // track the property to keep in sync
+        // so we can keep it updated
+        if (!mustSync) propsInSyncWithParent.push(k)
+        self[k] = self.parent[k]
+      }
+    })
+  }
+
+  /**
+   * Update the tag expressions and options
+   * @param   { * }  data - data we want to use to extend the tag properties
+   * @param   { Boolean } isInherited - is this update coming from a parent tag?
+   * @returns { self }
+   */
+  defineProperty(this, 'update', function(data, isInherited) {
+
+    // make sure the data passed will not override
+    // the component core methods
+    data = cleanUpData(data)
+    // inherit properties from the parent
+    inheritFromParent()
+    // normalize the tag properties in case an item object was initially passed
+    if (data && isObject(item)) {
+      normalizeData(data)
+      item = data
+    }
+    extend(self, data)
+    updateOpts()
+    self.trigger('update', data)
+    update(expressions, self)
+
+    // the updated event will be triggered
+    // once the DOM will be ready and all the re-flows are completed
+    // this is useful if you want to get the "real" root properties
+    // 4 ex: root.offsetWidth ...
+    if (isInherited && self.parent)
+      // closes #1599
+      self.parent.one('updated', function() { self.trigger('updated') })
+    else rAF(function() { self.trigger('updated') })
+
+    return this
+  })
+
+  defineProperty(this, 'mixin', function() {
+    each(arguments, function(mix) {
+      var instance,
+        props = [],
+        obj
+
+      mix = typeof mix === T_STRING ? riot.mixin(mix) : mix
+
+      // check if the mixin is a function
+      if (isFunction(mix)) {
+        // create the new mixin instance
+        instance = new mix()
+      } else instance = mix
+
+      // build multilevel prototype inheritance chain property list
+      do props = props.concat(Object.getOwnPropertyNames(obj || instance))
+      while (obj = Object.getPrototypeOf(obj || instance))
+
+      // loop the keys in the function prototype or the all object keys
+      each(props, function(key) {
+        // bind methods to self
+        if (key != 'init' && !self[key])
+          // apply method only if it does not already exist on the instance
+          self[key] = isFunction(instance[key]) ?
+            instance[key].bind(self) :
+            instance[key]
+      })
+
+      // init method will be called automatically
+      if (instance.init) instance.init.bind(self)()
+    })
+    return this
+  })
+
+  defineProperty(this, 'mount', function() {
+
+    updateOpts()
+
+    // add global mixins
+    var globalMixin = riot.mixin(GLOBAL_MIXIN)
+    if (globalMixin)
+      for (var i in globalMixin)
+        if (globalMixin.hasOwnProperty(i))
+          self.mixin(globalMixin[i])
+
+    // initialiation
+    if (impl.fn) impl.fn.call(self, opts)
+
+    // parse layout after init. fn may calculate args for nested custom tags
+    parseExpressions(dom, self, expressions)
+
+    // mount the child tags
+    toggle(true)
+
+    // update the root adding custom attributes coming from the compiler
+    // it fixes also #1087
+    if (impl.attrs)
+      walkAttributes(impl.attrs, function (k, v) { setAttr(root, k, v) })
+    if (impl.attrs || hasImpl)
+      parseExpressions(self.root, self, expressions)
+
+    if (!self.parent || isLoop) self.update(item)
+
+    // internal use only, fixes #403
+    self.trigger('before-mount')
+
+    if (isLoop && !hasImpl) {
+      // update the root attribute for the looped elements
+      root = dom.firstChild
+    } else {
+      while (dom.firstChild) root.appendChild(dom.firstChild)
+      if (root.stub) root = parent.root
+    }
+
+    defineProperty(self, 'root', root)
+
+    // parse the named dom nodes in the looped child
+    // adding them to the parent as well
+    if (isLoop)
+      parseNamedElements(self.root, self.parent, null, true)
+
+    // if it's not a child tag we can trigger its mount event
+    if (!self.parent || self.parent.isMounted) {
+      self.isMounted = true
+      self.trigger('mount')
+    }
+    // otherwise we need to wait that the parent event gets triggered
+    else self.parent.one('mount', function() {
+      // avoid to trigger the `mount` event for the tags
+      // not visible included in an if statement
+      if (!isInStub(self.root)) {
+        self.parent.isMounted = self.isMounted = true
+        self.trigger('mount')
+      }
+    })
+  })
+
+
+  defineProperty(this, 'unmount', function(keepRootTag) {
+    var el = root,
+      p = el.parentNode,
+      ptag,
+      tagIndex = __virtualDom.indexOf(self)
+
+    self.trigger('before-unmount')
+
+    // remove this tag instance from the global virtualDom variable
+    if (~tagIndex)
+      __virtualDom.splice(tagIndex, 1)
+
+    if (p) {
+
+      if (parent) {
+        ptag = getImmediateCustomParentTag(parent)
+        // remove this tag from the parent tags object
+        // if there are multiple nested tags with same name..
+        // remove this element form the array
+        if (isArray(ptag.tags[tagName]))
+          each(ptag.tags[tagName], function(tag, i) {
+            if (tag._riot_id == self._riot_id)
+              ptag.tags[tagName].splice(i, 1)
+          })
+        else
+          // otherwise just delete the tag instance
+          ptag.tags[tagName] = undefined
+      }
+
+      else
+        while (el.firstChild) el.removeChild(el.firstChild)
+
+      if (!keepRootTag)
+        p.removeChild(el)
+      else {
+        // the riot-tag and the data-is attributes aren't needed anymore, remove them
+        remAttr(p, RIOT_TAG_IS)
+        remAttr(p, RIOT_TAG) // this will be removed in riot 3.0.0
+      }
+
+    }
+
+    if (this._virts) {
+      each(this._virts, function(v) {
+        if (v.parentNode) v.parentNode.removeChild(v)
+      })
+    }
+
+    self.trigger('unmount')
+    toggle()
+    self.off('*')
+    self.isMounted = false
+    delete root._tag
+
+  })
+
+  // proxy function to bind updates
+  // dispatched from a parent tag
+  function onChildUpdate(data) { self.update(data, true) }
+
+  function toggle(isMount) {
+
+    // mount/unmount children
+    each(childTags, function(child) { child[isMount ? 'mount' : 'unmount']() })
+
+    // listen/unlisten parent (events flow one way from parent to children)
+    if (!parent) return
+    var evt = isMount ? 'on' : 'off'
+
+    // the loop tags will be always in sync with the parent automatically
+    if (isLoop)
+      parent[evt]('unmount', self.unmount)
+    else {
+      parent[evt]('update', onChildUpdate)[evt]('unmount', self.unmount)
+    }
+  }
+
+
+  // named elements available for fn
+  parseNamedElements(dom, this, childTags)
+
+}
+/**
+ * Attach an event to a DOM node
+ * @param { String } name - event name
+ * @param { Function } handler - event callback
+ * @param { Object } dom - dom node
+ * @param { Tag } tag - tag instance
+ */
+function setEventHandler(name, handler, dom, tag) {
+
+  dom[name] = function(e) {
+
+    var ptag = tag._parent,
+      item = tag._item,
+      el
+
+    if (!item)
+      while (ptag && !item) {
+        item = ptag._item
+        ptag = ptag._parent
+      }
+
+    // cross browser event fix
+    e = e || window.event
+
+    // override the event properties
+    if (isWritable(e, 'currentTarget')) e.currentTarget = dom
+    if (isWritable(e, 'target')) e.target = e.srcElement
+    if (isWritable(e, 'which')) e.which = e.charCode || e.keyCode
+
+    e.item = item
+
+    // prevent default behaviour (by default)
+    if (handler.call(tag, e) !== true && !/radio|check/.test(dom.type)) {
+      if (e.preventDefault) e.preventDefault()
+      e.returnValue = false
+    }
+
+    if (!e.preventUpdate) {
+      el = item ? getImmediateCustomParentTag(ptag) : tag
+      el.update()
+    }
+
+  }
+
+}
+
+
+/**
+ * Insert a DOM node replacing another one (used by if- attribute)
+ * @param   { Object } root - parent node
+ * @param   { Object } node - node replaced
+ * @param   { Object } before - node added
+ */
+function insertTo(root, node, before) {
+  if (!root) return
+  root.insertBefore(before, node)
+  root.removeChild(node)
+}
+
+/**
+ * Update the expressions in a Tag instance
+ * @param   { Array } expressions - expression that must be re evaluated
+ * @param   { Tag } tag - tag instance
+ */
+function update(expressions, tag) {
+
+  each(expressions, function(expr, i) {
+
+    var dom = expr.dom,
+      attrName = expr.attr,
+      value = tmpl(expr.expr, tag),
+      parent = expr.dom.parentNode
+
+    if (expr.bool) {
+      value = !!value
+    } else if (value == null) {
+      value = ''
+    }
+
+    // #1638: regression of #1612, update the dom only if the value of the
+    // expression was changed
+    if (expr.value === value) {
+      return
+    }
+    expr.value = value
+
+    // textarea and text nodes has no attribute name
+    if (!attrName) {
+      // about #815 w/o replace: the browser converts the value to a string,
+      // the comparison by "==" does too, but not in the server
+      value += ''
+      // test for parent avoids error with invalid assignment to nodeValue
+      if (parent) {
+        if (parent.tagName === 'TEXTAREA') {
+          parent.value = value                    // #1113
+          if (!IE_VERSION) dom.nodeValue = value  // #1625 IE throws here, nodeValue
+        }                                         // will be available on 'updated'
+        else dom.nodeValue = value
+      }
+      return
+    }
+
+    // ~~#1612: look for changes in dom.value when updating the value~~
+    if (attrName === 'value') {
+      dom.value = value
+      return
+    }
+
+    // remove original attribute
+    remAttr(dom, attrName)
+
+    // event handler
+    if (isFunction(value)) {
+      setEventHandler(attrName, value, dom, tag)
+
+    // if- conditional
+    } else if (attrName == 'if') {
+      var stub = expr.stub,
+        add = function() { insertTo(stub.parentNode, stub, dom) },
+        remove = function() { insertTo(dom.parentNode, dom, stub) }
+
+      // add to DOM
+      if (value) {
+        if (stub) {
+          add()
+          dom.inStub = false
+          // avoid to trigger the mount event if the tags is not visible yet
+          // maybe we can optimize this avoiding to mount the tag at all
+          if (!isInStub(dom)) {
+            walk(dom, function(el) {
+              if (el._tag && !el._tag.isMounted)
+                el._tag.isMounted = !!el._tag.trigger('mount')
+            })
+          }
+        }
+      // remove from DOM
+      } else {
+        stub = expr.stub = stub || document.createTextNode('')
+        // if the parentNode is defined we can easily replace the tag
+        if (dom.parentNode)
+          remove()
+        // otherwise we need to wait the updated event
+        else (tag.parent || tag).one('updated', remove)
+
+        dom.inStub = true
+      }
+    // show / hide
+    } else if (attrName === 'show') {
+      dom.style.display = value ? '' : 'none'
+
+    } else if (attrName === 'hide') {
+      dom.style.display = value ? 'none' : ''
+
+    } else if (expr.bool) {
+      dom[attrName] = value
+      if (value) setAttr(dom, attrName, attrName)
+      if (FIREFOX && attrName === 'selected' && dom.tagName === 'OPTION') {
+        dom.__riot1374 = value   // #1374
+      }
+
+    } else if (value === 0 || value && typeof value !== T_OBJECT) {
+      // <img src="{ expr }">
+      if (startsWith(attrName, RIOT_PREFIX) && attrName != RIOT_TAG) {
+        attrName = attrName.slice(RIOT_PREFIX.length)
+      }
+      setAttr(dom, attrName, value)
+    }
+
+  })
+
+}
+/**
+ * Specialized function for looping an array-like collection with `each={}`
+ * @param   { Array } els - collection of items
+ * @param   {Function} fn - callback function
+ * @returns { Array } the array looped
+ */
+function each(els, fn) {
+  var len = els ? els.length : 0
+
+  for (var i = 0, el; i < len; i++) {
+    el = els[i]
+    // return false -> current item was removed by fn during the loop
+    if (el != null && fn(el, i) === false) i--
+  }
+  return els
+}
+
+/**
+ * Detect if the argument passed is a function
+ * @param   { * } v - whatever you want to pass to this function
+ * @returns { Boolean } -
+ */
+function isFunction(v) {
+  return typeof v === T_FUNCTION || false   // avoid IE problems
+}
+
+/**
+ * Get the outer html of any DOM node SVGs included
+ * @param   { Object } el - DOM node to parse
+ * @returns { String } el.outerHTML
+ */
+function getOuterHTML(el) {
+  if (el.outerHTML) return el.outerHTML
+  // some browsers do not support outerHTML on the SVGs tags
+  else {
+    var container = mkEl('div')
+    container.appendChild(el.cloneNode(true))
+    return container.innerHTML
+  }
+}
+
+/**
+ * Set the inner html of any DOM node SVGs included
+ * @param { Object } container - DOM node where we will inject the new html
+ * @param { String } html - html to inject
+ */
+function setInnerHTML(container, html) {
+  if (typeof container.innerHTML != T_UNDEF) container.innerHTML = html
+  // some browsers do not support innerHTML on the SVGs tags
+  else {
+    var doc = new DOMParser().parseFromString(html, 'application/xml')
+    container.appendChild(
+      container.ownerDocument.importNode(doc.documentElement, true)
+    )
+  }
+}
+
+/**
+ * Checks wether a DOM node must be considered part of an svg document
+ * @param   { String }  name - tag name
+ * @returns { Boolean } -
+ */
+function isSVGTag(name) {
+  return ~SVG_TAGS_LIST.indexOf(name)
+}
+
+/**
+ * Detect if the argument passed is an object, exclude null.
+ * NOTE: Use isObject(x) && !isArray(x) to excludes arrays.
+ * @param   { * } v - whatever you want to pass to this function
+ * @returns { Boolean } -
+ */
+function isObject(v) {
+  return v && typeof v === T_OBJECT         // typeof null is 'object'
+}
+
+/**
+ * Remove any DOM attribute from a node
+ * @param   { Object } dom - DOM node we want to update
+ * @param   { String } name - name of the property we want to remove
+ */
+function remAttr(dom, name) {
+  dom.removeAttribute(name)
+}
+
+/**
+ * Convert a string containing dashes to camel case
+ * @param   { String } string - input string
+ * @returns { String } my-string -> myString
+ */
+function toCamel(string) {
+  return string.replace(/-(\w)/g, function(_, c) {
+    return c.toUpperCase()
+  })
+}
+
+/**
+ * Get the value of any DOM attribute on a node
+ * @param   { Object } dom - DOM node we want to parse
+ * @param   { String } name - name of the attribute we want to get
+ * @returns { String | undefined } name of the node attribute whether it exists
+ */
+function getAttr(dom, name) {
+  return dom.getAttribute(name)
+}
+
+/**
+ * Set any DOM attribute
+ * @param { Object } dom - DOM node we want to update
+ * @param { String } name - name of the property we want to set
+ * @param { String } val - value of the property we want to set
+ */
+function setAttr(dom, name, val) {
+  dom.setAttribute(name, val)
+}
+
+/**
+ * Detect the tag implementation by a DOM node
+ * @param   { Object } dom - DOM node we need to parse to get its tag implementation
+ * @returns { Object } it returns an object containing the implementation of a custom tag (template and boot function)
+ */
+function getTag(dom) {
+  return dom.tagName && __tagImpl[getAttr(dom, RIOT_TAG_IS) ||
+    getAttr(dom, RIOT_TAG) || dom.tagName.toLowerCase()]
+}
+/**
+ * Add a child tag to its parent into the `tags` object
+ * @param   { Object } tag - child tag instance
+ * @param   { String } tagName - key where the new tag will be stored
+ * @param   { Object } parent - tag instance where the new child tag will be included
+ */
+function addChildTag(tag, tagName, parent) {
+  var cachedTag = parent.tags[tagName]
+
+  // if there are multiple children tags having the same name
+  if (cachedTag) {
+    // if the parent tags property is not yet an array
+    // create it adding the first cached tag
+    if (!isArray(cachedTag))
+      // don't add the same tag twice
+      if (cachedTag !== tag)
+        parent.tags[tagName] = [cachedTag]
+    // add the new nested tag to the array
+    if (!contains(parent.tags[tagName], tag))
+      parent.tags[tagName].push(tag)
+  } else {
+    parent.tags[tagName] = tag
+  }
+}
+
+/**
+ * Move the position of a custom tag in its parent tag
+ * @param   { Object } tag - child tag instance
+ * @param   { String } tagName - key where the tag was stored
+ * @param   { Number } newPos - index where the new tag will be stored
+ */
+function moveChildTag(tag, tagName, newPos) {
+  var parent = tag.parent,
+    tags
+  // no parent no move
+  if (!parent) return
+
+  tags = parent.tags[tagName]
+
+  if (isArray(tags))
+    tags.splice(newPos, 0, tags.splice(tags.indexOf(tag), 1)[0])
+  else addChildTag(tag, tagName, parent)
+}
+
+/**
+ * Create a new child tag including it correctly into its parent
+ * @param   { Object } child - child tag implementation
+ * @param   { Object } opts - tag options containing the DOM node where the tag will be mounted
+ * @param   { String } innerHTML - inner html of the child node
+ * @param   { Object } parent - instance of the parent tag including the child custom tag
+ * @returns { Object } instance of the new child tag just created
+ */
+function initChildTag(child, opts, innerHTML, parent) {
+  var tag = new Tag(child, opts, innerHTML),
+    tagName = getTagName(opts.root),
+    ptag = getImmediateCustomParentTag(parent)
+  // fix for the parent attribute in the looped elements
+  tag.parent = ptag
+  // store the real parent tag
+  // in some cases this could be different from the custom parent tag
+  // for example in nested loops
+  tag._parent = parent
+
+  // add this tag to the custom parent tag
+  addChildTag(tag, tagName, ptag)
+  // and also to the real parent tag
+  if (ptag !== parent)
+    addChildTag(tag, tagName, parent)
+  // empty the child node once we got its template
+  // to avoid that its children get compiled multiple times
+  opts.root.innerHTML = ''
+
+  return tag
+}
+
+/**
+ * Loop backward all the parents tree to detect the first custom parent tag
+ * @param   { Object } tag - a Tag instance
+ * @returns { Object } the instance of the first custom parent tag found
+ */
+function getImmediateCustomParentTag(tag) {
+  var ptag = tag
+  while (!getTag(ptag.root)) {
+    if (!ptag.parent) break
+    ptag = ptag.parent
+  }
+  return ptag
+}
+
+/**
+ * Helper function to set an immutable property
+ * @param   { Object } el - object where the new property will be set
+ * @param   { String } key - object key where the new property will be stored
+ * @param   { * } value - value of the new property
+* @param   { Object } options - set the propery overriding the default options
+ * @returns { Object } - the initial object
+ */
+function defineProperty(el, key, value, options) {
+  Object.defineProperty(el, key, extend({
+    value: value,
+    enumerable: false,
+    writable: false,
+    configurable: true
+  }, options))
+  return el
+}
+
+/**
+ * Get the tag name of any DOM node
+ * @param   { Object } dom - DOM node we want to parse
+ * @returns { String } name to identify this dom node in riot
+ */
+function getTagName(dom) {
+  var child = getTag(dom),
+    namedTag = getAttr(dom, 'name'),
+    tagName = namedTag && !tmpl.hasExpr(namedTag) ?
+                namedTag :
+              child ? child.name : dom.tagName.toLowerCase()
+
+  return tagName
+}
+
+/**
+ * Extend any object with other properties
+ * @param   { Object } src - source object
+ * @returns { Object } the resulting extended object
+ *
+ * var obj = { foo: 'baz' }
+ * extend(obj, {bar: 'bar', foo: 'bar'})
+ * console.log(obj) => {bar: 'bar', foo: 'bar'}
+ *
+ */
+function extend(src) {
+  var obj, args = arguments
+  for (var i = 1; i < args.length; ++i) {
+    if (obj = args[i]) {
+      for (var key in obj) {
+        // check if this property of the source object could be overridden
+        if (isWritable(src, key))
+          src[key] = obj[key]
+      }
+    }
+  }
+  return src
+}
+
+/**
+ * Check whether an array contains an item
+ * @param   { Array } arr - target array
+ * @param   { * } item - item to test
+ * @returns { Boolean } Does 'arr' contain 'item'?
+ */
+function contains(arr, item) {
+  return ~arr.indexOf(item)
+}
+
+/**
+ * Check whether an object is a kind of array
+ * @param   { * } a - anything
+ * @returns {Boolean} is 'a' an array?
+ */
+function isArray(a) { return Array.isArray(a) || a instanceof Array }
+
+/**
+ * Detect whether a property of an object could be overridden
+ * @param   { Object }  obj - source object
+ * @param   { String }  key - object property
+ * @returns { Boolean } is this property writable?
+ */
+function isWritable(obj, key) {
+  var props = Object.getOwnPropertyDescriptor(obj, key)
+  return typeof obj[key] === T_UNDEF || props && props.writable
+}
+
+
+/**
+ * With this function we avoid that the internal Tag methods get overridden
+ * @param   { Object } data - options we want to use to extend the tag instance
+ * @returns { Object } clean object without containing the riot internal reserved words
+ */
+function cleanUpData(data) {
+  if (!(data instanceof Tag) && !(data && typeof data.trigger == T_FUNCTION))
+    return data
+
+  var o = {}
+  for (var key in data) {
+    if (!RESERVED_WORDS_BLACKLIST.test(key)) o[key] = data[key]
+  }
+  return o
+}
+
+/**
+ * Walk down recursively all the children tags starting dom node
+ * @param   { Object }   dom - starting node where we will start the recursion
+ * @param   { Function } fn - callback to transform the child node just found
+ */
+function walk(dom, fn) {
+  if (dom) {
+    // stop the recursion
+    if (fn(dom) === false) return
+    else {
+      dom = dom.firstChild
+
+      while (dom) {
+        walk(dom, fn)
+        dom = dom.nextSibling
+      }
+    }
+  }
+}
+
+/**
+ * Minimize risk: only zero or one _space_ between attr & value
+ * @param   { String }   html - html string we want to parse
+ * @param   { Function } fn - callback function to apply on any attribute found
+ */
+function walkAttributes(html, fn) {
+  var m,
+    re = /([-\w]+) ?= ?(?:"([^"]*)|'([^']*)|({[^}]*}))/g
+
+  while (m = re.exec(html)) {
+    fn(m[1].toLowerCase(), m[2] || m[3] || m[4])
+  }
+}
+
+/**
+ * Check whether a DOM node is in stub mode, useful for the riot 'if' directive
+ * @param   { Object }  dom - DOM node we want to parse
+ * @returns { Boolean } -
+ */
+function isInStub(dom) {
+  while (dom) {
+    if (dom.inStub) return true
+    dom = dom.parentNode
+  }
+  return false
+}
+
+/**
+ * Create a generic DOM node
+ * @param   { String } name - name of the DOM node we want to create
+ * @param   { Boolean } isSvg - should we use a SVG as parent node?
+ * @returns { Object } DOM node just created
+ */
+function mkEl(name, isSvg) {
+  return isSvg ?
+    document.createElementNS('http://www.w3.org/2000/svg', 'svg') :
+    document.createElement(name)
+}
+
+/**
+ * Shorter and fast way to select multiple nodes in the DOM
+ * @param   { String } selector - DOM selector
+ * @param   { Object } ctx - DOM node where the targets of our search will is located
+ * @returns { Object } dom nodes found
+ */
+function $$(selector, ctx) {
+  return (ctx || document).querySelectorAll(selector)
+}
+
+/**
+ * Shorter and fast way to select a single node in the DOM
+ * @param   { String } selector - unique dom selector
+ * @param   { Object } ctx - DOM node where the target of our search will is located
+ * @returns { Object } dom node found
+ */
+function $(selector, ctx) {
+  return (ctx || document).querySelector(selector)
+}
+
+/**
+ * Simple object prototypal inheritance
+ * @param   { Object } parent - parent object
+ * @returns { Object } child instance
+ */
+function inherit(parent) {
+  function Child() {}
+  Child.prototype = parent
+  return new Child()
+}
+
+/**
+ * Get the name property needed to identify a DOM node in riot
+ * @param   { Object } dom - DOM node we need to parse
+ * @returns { String | undefined } give us back a string to identify this dom node
+ */
+function getNamedKey(dom) {
+  return getAttr(dom, 'id') || getAttr(dom, 'name')
+}
+
+/**
+ * Set the named properties of a tag element
+ * @param { Object } dom - DOM node we need to parse
+ * @param { Object } parent - tag instance where the named dom element will be eventually added
+ * @param { Array } keys - list of all the tag instance properties
+ */
+function setNamed(dom, parent, keys) {
+  // get the key value we want to add to the tag instance
+  var key = getNamedKey(dom),
+    isArr,
+    // add the node detected to a tag instance using the named property
+    add = function(value) {
+      // avoid to override the tag properties already set
+      if (contains(keys, key)) return
+      // check whether this value is an array
+      isArr = isArray(value)
+      // if the key was never set
+      if (!value)
+        // set it once on the tag instance
+        parent[key] = dom
+      // if it was an array and not yet set
+      else if (!isArr || isArr && !contains(value, dom)) {
+        // add the dom node into the array
+        if (isArr)
+          value.push(dom)
+        else
+          parent[key] = [value, dom]
+      }
+    }
+
+  // skip the elements with no named properties
+  if (!key) return
+
+  // check whether this key has been already evaluated
+  if (tmpl.hasExpr(key))
+    // wait the first updated event only once
+    parent.one('mount', function() {
+      key = getNamedKey(dom)
+      add(parent[key])
+    })
+  else
+    add(parent[key])
+
+}
+
+/**
+ * Faster String startsWith alternative
+ * @param   { String } src - source string
+ * @param   { String } str - test string
+ * @returns { Boolean } -
+ */
+function startsWith(src, str) {
+  return src.slice(0, str.length) === str
+}
+
+/**
+ * requestAnimationFrame function
+ * Adapted from https://gist.github.com/paulirish/1579671, license MIT
+ */
+var rAF = (function (w) {
+  var raf = w.requestAnimationFrame    ||
+            w.mozRequestAnimationFrame || w.webkitRequestAnimationFrame
+
+  if (!raf || /iP(ad|hone|od).*OS 6/.test(w.navigator.userAgent)) {  // buggy iOS6
+    var lastTime = 0
+
+    raf = function (cb) {
+      var nowtime = Date.now(), timeout = Math.max(16 - (nowtime - lastTime), 0)
+      setTimeout(function () { cb(lastTime = nowtime + timeout) }, timeout)
+    }
+  }
+  return raf
+
+})(window || {})
+
+/**
+ * Mount a tag creating new Tag instance
+ * @param   { Object } root - dom node where the tag will be mounted
+ * @param   { String } tagName - name of the riot tag we want to mount
+ * @param   { Object } opts - options to pass to the Tag instance
+ * @returns { Tag } a new Tag instance
+ */
+function mountTo(root, tagName, opts) {
+  var tag = __tagImpl[tagName],
+    // cache the inner HTML to fix #855
+    innerHTML = root._innerHTML = root._innerHTML || root.innerHTML
+
+  // clear the inner html
+  root.innerHTML = ''
+
+  if (tag && root) tag = new Tag(tag, { root: root, opts: opts }, innerHTML)
+
+  if (tag && tag.mount) {
+    tag.mount()
+    // add this tag to the virtualDom variable
+    if (!contains(__virtualDom, tag)) __virtualDom.push(tag)
+  }
+
+  return tag
+}
+/**
+ * Riot public api
+ */
+
+// share methods for other riot parts, e.g. compiler
+riot.util = { brackets: brackets, tmpl: tmpl }
+
+/**
+ * Create a mixin that could be globally shared across all the tags
+ */
+riot.mixin = (function() {
+  var mixins = {},
+    globals = mixins[GLOBAL_MIXIN] = {},
+    _id = 0
+
+  /**
+   * Create/Return a mixin by its name
+   * @param   { String }  name - mixin name (global mixin if object)
+   * @param   { Object }  mixin - mixin logic
+   * @param   { Boolean } g - is global?
+   * @returns { Object }  the mixin logic
+   */
+  return function(name, mixin, g) {
+    // Unnamed global
+    if (isObject(name)) {
+      riot.mixin('__unnamed_'+_id++, name, true)
+      return
+    }
+
+    var store = g ? globals : mixins
+
+    // Getter
+    if (!mixin) {
+      if (typeof store[name] === T_UNDEF) {
+        throw new Error('Unregistered mixin: ' + name)
+      }
+      return store[name]
+    }
+    // Setter
+    if (isFunction(mixin)) {
+      extend(mixin.prototype, store[name] || {})
+      store[name] = mixin
+    }
+    else {
+      store[name] = extend(store[name] || {}, mixin)
+    }
+  }
+
+})()
+
+/**
+ * Create a new riot tag implementation
+ * @param   { String }   name - name/id of the new riot tag
+ * @param   { String }   html - tag template
+ * @param   { String }   css - custom tag css
+ * @param   { String }   attrs - root tag attributes
+ * @param   { Function } fn - user function
+ * @returns { String } name/id of the tag just created
+ */
+riot.tag = function(name, html, css, attrs, fn) {
+  if (isFunction(attrs)) {
+    fn = attrs
+    if (/^[\w\-]+\s?=/.test(css)) {
+      attrs = css
+      css = ''
+    } else attrs = ''
+  }
+  if (css) {
+    if (isFunction(css)) fn = css
+    else styleManager.add(css)
+  }
+  name = name.toLowerCase()
+  __tagImpl[name] = { name: name, tmpl: html, attrs: attrs, fn: fn }
+  return name
+}
+
+/**
+ * Create a new riot tag implementation (for use by the compiler)
+ * @param   { String }   name - name/id of the new riot tag
+ * @param   { String }   html - tag template
+ * @param   { String }   css - custom tag css
+ * @param   { String }   attrs - root tag attributes
+ * @param   { Function } fn - user function
+ * @returns { String } name/id of the tag just created
+ */
+riot.tag2 = function(name, html, css, attrs, fn) {
+  if (css) styleManager.add(css)
+  //if (bpair) riot.settings.brackets = bpair
+  __tagImpl[name] = { name: name, tmpl: html, attrs: attrs, fn: fn }
+  return name
+}
+
+/**
+ * Mount a tag using a specific tag implementation
+ * @param   { String } selector - tag DOM selector
+ * @param   { String } tagName - tag implementation name
+ * @param   { Object } opts - tag logic
+ * @returns { Array } new tags instances
+ */
+riot.mount = function(selector, tagName, opts) {
+
+  var els,
+    allTags,
+    tags = []
+
+  // helper functions
+
+  function addRiotTags(arr) {
+    var list = ''
+    each(arr, function (e) {
+      if (!/[^-\w]/.test(e)) {
+        e = e.trim().toLowerCase()
+        list += ',[' + RIOT_TAG_IS + '="' + e + '"],[' + RIOT_TAG + '="' + e + '"]'
+      }
+    })
+    return list
+  }
+
+  function selectAllTags() {
+    var keys = Object.keys(__tagImpl)
+    return keys + addRiotTags(keys)
+  }
+
+  function pushTags(root) {
+    if (root.tagName) {
+      var riotTag = getAttr(root, RIOT_TAG_IS) || getAttr(root, RIOT_TAG)
+
+      // have tagName? force riot-tag to be the same
+      if (tagName && riotTag !== tagName) {
+        riotTag = tagName
+        setAttr(root, RIOT_TAG_IS, tagName)
+        setAttr(root, RIOT_TAG, tagName) // this will be removed in riot 3.0.0
+      }
+      var tag = mountTo(root, riotTag || root.tagName.toLowerCase(), opts)
+
+      if (tag) tags.push(tag)
+    } else if (root.length) {
+      each(root, pushTags)   // assume nodeList
+    }
+  }
+
+  // ----- mount code -----
+
+  // inject styles into DOM
+  styleManager.inject()
+
+  if (isObject(tagName)) {
+    opts = tagName
+    tagName = 0
+  }
+
+  // crawl the DOM to find the tag
+  if (typeof selector === T_STRING) {
+    if (selector === '*')
+      // select all the tags registered
+      // and also the tags found with the riot-tag attribute set
+      selector = allTags = selectAllTags()
+    else
+      // or just the ones named like the selector
+      selector += addRiotTags(selector.split(/, */))
+
+    // make sure to pass always a selector
+    // to the querySelectorAll function
+    els = selector ? $$(selector) : []
+  }
+  else
+    // probably you have passed already a tag or a NodeList
+    els = selector
+
+  // select all the registered and mount them inside their root elements
+  if (tagName === '*') {
+    // get all custom tags
+    tagName = allTags || selectAllTags()
+    // if the root els it's just a single tag
+    if (els.tagName)
+      els = $$(tagName, els)
+    else {
+      // select all the children for all the different root elements
+      var nodeList = []
+      each(els, function (_el) {
+        nodeList.push($$(tagName, _el))
+      })
+      els = nodeList
+    }
+    // get rid of the tagName
+    tagName = 0
+  }
+
+  pushTags(els)
+
+  return tags
+}
+
+/**
+ * Update all the tags instances created
+ * @returns { Array } all the tags instances
+ */
+riot.update = function() {
+  return each(__virtualDom, function(tag) {
+    tag.update()
+  })
+}
+
+/**
+ * Export the Virtual DOM
+ */
+riot.vdom = __virtualDom
+
+/**
+ * Export the Tag constructor
+ */
+riot.Tag = Tag
+  // support CommonJS, AMD & browser
+  /* istanbul ignore next */
+  if (typeof exports === T_OBJECT)
+    module.exports = riot
+  else if (typeof define === T_FUNCTION && typeof define.amd !== T_UNDEF)
+    define(function() { return riot })
+  else
+    window.riot = riot
+
+})(typeof window != 'undefined' ? window : void 0);
+
+},{}],3:[function(require,module,exports){
+var RiotControl = {
+  _stores: [],
+  addStore: function(store) {
+    this._stores.push(store);
+  },
+  reset: function() {
+    this._stores = [];
+  }
+};
+
+['on','one','off','trigger'].forEach(function(api){
+  RiotControl[api] = function() {
+    var args = [].slice.call(arguments);
+    this._stores.forEach(function(el){
+      el[api].apply(el, args);
+    });
+  };
+});
+
+if (typeof(module) !== 'undefined') module.exports = RiotControl;
+
+},{}],4:[function(require,module,exports){
+var riot = require('riot');
+require('riot-router');
+
+require('./tags/home.tag');
+require('./tags/hello.tag');
+require('./tags/not-found.tag');
+require('./tags/menubar.tag');
+
+var Route = riot.router.Route;
+    DefaultRoute = riot.router.DefaultRoute, 
+    NotFoundRoute = riot.router.NotFoundRoute, 
+    RedirectRoute = riot.router.RedirectRoute;
+
+riot.router.routes([
+    new Route({path:'/hehehe/:zz',tag: 'hello'}),
+    new DefaultRoute({tag: 'home'}),
+    new RedirectRoute({from: 'x', to: 'hehehe'}),
+    new NotFoundRoute({tag: 'not-found'})
+]);
+
+riot.mount('*');
+riot.router.start();
+},{"./tags/hello.tag":8,"./tags/home.tag":9,"./tags/menubar.tag":10,"./tags/not-found.tag":11,"riot":2,"riot-router":1}],5:[function(require,module,exports){
+var Actions = {};
+
+module.exports = Actions;
+},{}],6:[function(require,module,exports){
+var RiotControl = require('riotcontrol');
+var Actions = require('./Actions');
+
+var ConfigStore = require('../stores/ConfigStore');
+
+var Action = {};
+Actions.Action = Action;
+
+Action.SetName = function(name){
+    RiotControl.trigger(ConfigStore.Action.SetName, name);
+};
+
+module.exports = Action;
+},{"../stores/ConfigStore":7,"./Actions":5,"riotcontrol":3}],7:[function(require,module,exports){
+var riot = require('riot');
+var RiotControl = require('riotcontrol');
+
+var ConfigStore = function (){
+    riot.observable(this);
+    var self = this;
+
+    self.Action = {
+        Changed: "ConfigStore_Value_Changed",
+        SetName: "ConfigStore_SetName"
+    };
+
+    self.on(self.Action.SetName,function(val){
+        self.test = val;
+        self.trigger(self.Action.Changed, val);
+    });
+}
+
+var store = new ConfigStore();
+RiotControl.addStore(store);
+module.exports = store;
+},{"riot":2,"riotcontrol":3}],8:[function(require,module,exports){
+var riot = require('riot');
+module.exports = riot.tag2('hello', '<menubar name="{opts.zz}"></menubar> <h1>こんにちわ {opts.zz} </h1> <p>{config.test}</p>', '', '', function(opts) {
+
+  var ConfigStore = require('../scripts/stores/ConfigStore.js');
+  this.config = ConfigStore;
+});
+},{"../scripts/stores/ConfigStore.js":7,"riot":2}],9:[function(require,module,exports){
+var riot = require('riot');
+module.exports = riot.tag2('home', '<menubar></menubar> <h1>Home<span class="glyphicon glyphicon-flash" aria-hidden="true"></span></h1> <p>{test}</p> <form onsubmit="{add}"> <input name="input" onkeyup="{edit}"> <button class="btn btn-primary" __disabled="{!text}">Change</button> </form>', '', '', function(opts) {
+
+    var RiotControl = require('riotcontrol');
+    var ConfigStore = require('../scripts/stores/ConfigStore');
+    var SampleAction = require('../scripts/actions/SampleAction');
+
+    this.disabled = true;
+
+    var self = this;
+
+    RiotControl.on(ConfigStore.Action.Changed, function(name){
+        self.test = name;
+        self.update();
+    });
+
+    this.edit = function(e) {
+      this.text = e.target.value;
+    }.bind(this)
+
+    this.add = function(e) {
+      if (this.text) {
+        SampleAction.SetName(this.input.value);
+        this.text = this.input.value = '';
+      }
+    }.bind(this)
+});
+
+},{"../scripts/actions/SampleAction":6,"../scripts/stores/ConfigStore":7,"riot":2,"riotcontrol":3}],10:[function(require,module,exports){
+var riot = require('riot');
+module.exports = riot.tag2('menubar', '<nav class="navbar navbar-default navbar-fixed-top"> <div class="container-fluid"> <div class="navbar-header"> <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="/#/">Chaap</a> </div> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li each="{links}" class="{active:act}"><a href="/#/hehehe/{name}">{name}</a></li> </ul> </div> </div> </nav>', '', '', function(opts) {
+
+    this.links = [
+        {name:"Neko", act:false},
+        {name:"Kuma", act:false},
+        {name:"User1", act:false},
+        {name:"User2", act:false},
+        {name:"User3", act:false}
+    ];
+    for (var i=0 ; i<this.links.length ; i++){
+        if(this.links[i].name == opts.name){
+            this.links[i].act = true;
+        }
+    }
+});
+},{"riot":2}],11:[function(require,module,exports){
+var riot = require('riot');
+module.exports = riot.tag2('not-found', '<p>404</p>', '', '', function(opts) {
+});
+},{"riot":2}]},{},[4]);
