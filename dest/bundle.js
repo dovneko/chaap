@@ -2,11 +2,11 @@
 !function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e(require("riot")):"function"==typeof define&&define.amd?define(["riot"],e):"object"==typeof exports?exports.Router=e(require("riot")):t.Router=e(t.riot)}(this,function(t){return function(t){function e(n){if(r[n])return r[n].exports;var i=r[n]={exports:{},id:n,loaded:!1};return t[n].call(i.exports,i,i.exports,e),i.loaded=!0,i.exports}var r={};return e.m=t,e.c=r,e.p="",e(0)}([function(t,e,r){var n,i,o;!function(u,s){i=[t,r(1),r(2)],n=s,o="function"==typeof n?n.apply(e,i):n,!(void 0!==o&&(t.exports=o))}(this,function(t,e,r){"use strict";function n(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function i(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function u(t){var e=t.split("?"),r=e[0].split("/"),n=e[1],i={};return n&&n.split("&").forEach(function(t){var e=t.split("=");i[e[0]]=e[1]}),r.push(i),r}var s=function(){function t(t,e){var r=[],n=!0,i=!1,o=void 0;try{for(var u,s=t[Symbol.iterator]();!(n=(u=s.next()).done)&&(r.push(u.value),!e||r.length!==e);n=!0);}catch(a){i=!0,o=a}finally{try{!n&&s["return"]&&s["return"]()}finally{if(i)throw o}}return r}return function(e,r){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return t(e,r);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),a=function x(t,e,r){null===t&&(t=Function.prototype);var n=Object.getOwnPropertyDescriptor(t,e);if(void 0===n){var i=Object.getPrototypeOf(t);return null===i?void 0:x(i,e,r)}if("value"in n)return n.value;var o=n.get;if(void 0!==o)return o.call(r)},c=function(){function t(t,e){for(var r=0;r<e.length;r++){var n=e[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}return function(e,r,n){return r&&t(e.prototype,r),n&&t(e,n),e}}(),h=console&&console.error||function(){},f=function(){function t(){o(this,t),e.router=this,e.observable(this),this.interceptors=[this.processRoute.bind(this)],this.handler=new v,this.current=new p("").response,this.process=this.process.bind(this)}return c(t,[{key:"route",value:function(t){this.handler=t}},{key:"routes",value:function(t){this.route((new v).routes(t))}},{key:"use",value:function(t){this.interceptors.push(t)}},{key:"process",value:function(){var t=Array.prototype.slice.call(arguments),e={},r=t.filter(function(t){return"string"==typeof t||(e=t,!1)}).join("/");"/"!==r[0]&&(r="/"+r);var n=new p(new k(r,e));return this.rootContext||(this.rootContext=n),this.processRequest(n),n}},{key:"processRequest",value:function(t){return this.processInterceptors(t),this.processResponse(t)}},{key:"processResponse",value:function(t){if(this.isRedirect(t))return this.processRedirect(t);var e=(t.request,t.response);return e.redirectTo?void 0:(this.current=e,this.rootContext=null,this.trigger("route:updated",e),t)}},{key:"isRedirect",value:function(t){return!!t.response.redirectTo}},{key:"processRedirect",value:function(t){var e=t.response.redirectTo;this.rootContext.addRedirect(e),this.navigateTo(e)}},{key:"navigateTo",value:function(t){e.route(t)}},{key:"processInterceptors",value:function(t,e,r){var n=(e||[]).concat(this.interceptors).concat(r||[]),i=function o(){if(!t.stop){var e=n.shift(),r=t.request,i=t.response;if(e)return e(r,i,o,t)}return t};return i()}},{key:"processRoute",value:function(t,e,r,n){return this.handler.process(t,e,n),r()}},{key:"start",value:function(){e.route.parser(u),e.route(this.process),e.route.start(),this.exec()}},{key:"exec",value:function(){e.route.exec(this.process)}}]),t}(),p=function(){function t(e){o(this,t),this.request="string"==typeof e?new k(e):e,this.response=new R(this.request),this.redirectStack=[]}return c(t,[{key:"addRedirect",value:function(t){if(this.redirectStack.indexOf(t)>-1)throw new Error("Cyclic redirection to "+t+". Stack = "+this.redirectStack);this.redirectStack.push(t)}}]),t}(),l=function(){function t(){o(this,t)}return c(t,[{key:"matches",value:function(t){return!1}},{key:"process",value:function(t,e){var r=this.matches(t);return r?this.routeMatch(t,e,r):this.routeMiss(t,e)}},{key:"routeMatch",value:function(t,e,r){return e.add(r),!0}},{key:"routeMiss",value:function(t,e){return!1}},{key:"processRoutes",value:function(t,e,r){if(r&&r.length){for(var n=r.length,i=0;i<n;i++){var o=r[i];if(o.process(t,e))return!0}return!1}}},{key:"createRequest",value:function(t,e){return new d(t,e)}}]),t}(),y=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));t=t||{},r.tag=t.tag,r.api=t.api,r.path=t.path,r.name=t.name,r.updatable=t.updatable,r.pathParameterNames=[];var i=r.getPath().replace(/^\//,"");return r.pattern="^/?"+i.replace(/:([^\/]+)/g,function(t,e){return this.pathParameterNames.push(e),"([^/]+)"}.bind(r))+"(:?/|$)",r.regex=new RegExp(r.pattern),r}return i(e,t),c(e,[{key:"routes",value:function(t){var e=t.filter(function(t){return t instanceof m}),r=t.filter(function(t){return t instanceof b}),n=t.filter(function(t){return t instanceof g}),i=t.filter(function(t){return e.indexOf(t)===-1&&r.indexOf(t)===-1&&n.indexOf(t)===-1});return n.length>1&&h("Can't use more than one NotFoundRoute per route. --> "+this.getPath()),r.length>1&&h("Can't use more than one DefaultRoute per route. --> "+this.getPath()),this._routes=[].concat(e).concat(i).concat(r).concat(n),this}},{key:"matches",value:function(t){var e=this.regex.exec(t.uri);if(e){var r={};for(var n in this.pathParameterNames)if(this.pathParameterNames.hasOwnProperty(n)){var i=this.pathParameterNames[n];r[i]=decodeURIComponent(e[parseInt(n,10)+1])}return{route:this,tag:this.tag,api:this.api,found:e[0],params:r}}return!1}},{key:"routeMatch",value:function(t,r,n){var i=a(Object.getPrototypeOf(e.prototype),"routeMatch",this).call(this,t,r,n);return this.processRoutes(t,r,n),i}},{key:"processRoutes",value:function(t,r,n){return a(Object.getPrototypeOf(e.prototype),"processRoutes",this).call(this,this.createRequest(t,n),r,this._routes)}},{key:"getPath",value:function(){return this.name||this.path||("string"==typeof this.tag?this.tag:"")}}]),e}(l),v=function(t){function e(){return o(this,e),n(this,Object.getPrototypeOf(e).apply(this,arguments))}return i(e,t),e}(y),d=function w(t,e){o(this,w),this.request=t,this.matcher=e,this.uri=this.request.uri.substring(e.found.length),this.parentUri=this.request.uri.substring(0,e.found.length),this.query=this.request.query},g=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},r.tag=t.tag,r.api=t.api,r}return i(e,t),c(e,[{key:"matches",value:function(t){return{route:this,tag:this.tag,api:this.api,found:t.uri}}}]),e}(l),m=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},r.from=t.from,r.to=t.to,r.pattern="(^/?)"+r.from+"(/|$)",r.regex=new RegExp(r.pattern),r}return i(e,t),c(e,[{key:"process",value:function(t,e){var r=t.uri.replace(this.regex,"$1"+this.to+"$2");if(r!==t.uri){var n=t.parentUri||"";return e.redirectTo=n+r,!0}}}]),e}(l),b=function(t){function e(t){o(this,e);var r=n(this,Object.getPrototypeOf(e).call(this,t));return t=t||{},r.tag=t.tag,r.api=t.api,r}return i(e,t),c(e,[{key:"matches",value:function(t){var e=t.uri.trim();if("/"===e||""===e)return{route:this,tag:this.tag,api:this.api,found:e}}}]),e}(l),k=function j(t,e){o(this,j),this.uri=t,this.query=e},R=function(){function t(e){o(this,t),this.uri=e.uri,this.matches=[],this.params={},this.query=e.query}return c(t,[{key:"add",value:function(t){this.matches.push(t);var e=t.params;if(e)for(var r in e)e.hasOwnProperty(r)&&(this.params[r]=e[r])}},{key:"get",value:function(t){return this.matches[t]}},{key:"size",value:function(){return this.matches.length}},{key:"isEmpty",value:function(){return this.matches.length}}]),t}();e.tag("route","<router-content></router-content>",function(t){this.calculateLevel=function(t){var e=0;return t.parent&&(e+=this.calculateLevel(t.parent)),t.opts.__router_level&&(e+=t.opts.__router_level),t.__router_tag&&(e+=1),e}.bind(this),this.normalizeTag=function(t,e,r){var n=t(e,r);return"string"==typeof n?t=n:(t=n.tag||t,e=n.api||e),[t,e,r]},this.unmountTag=function(){this.instance&&this.instance.unmount(!0)},this.mountTag=function(t,r,n){if("function"==typeof t){var i=this.normalizeTag(t,r,n),o=s(i,3);t=o[0],r=o[1],n=o[2]}this.canUpdate(t,r,n)?this.instance.update(r):(this.unmountTag(),t&&(this.root.replaceChild(document.createElement(t),this.root.children[0]),this.instance=e.mount(this.root.children[0],t,r)[0],this.instanceTag=t,this.instanceApi=r))},this.canUpdate=function(r,n,i){return!!((e.router.config.updatable||t.updatable||i.updatable)&&this.instance&&this.instance.isMounted&&this.instanceTag===r)},this.updateRoute=function(){var n={tag:null};if(e.router&&e.router.current){var i=e.router.current;if(this.level<=i.size()){var o=i.get(this.level);if(o){var u=o.params||{},s=i.query||{},a=r(!0,{},t,s,o.api,u,{__router_level:this.level,query:s});n={tag:o.tag,api:a,updatable:o.route.updatable}}}}n.tag?this.mountTag(n.tag,n.api,n):this.unmountTag()}.bind(this),this.__router_tag="route",this.level=this.calculateLevel(this),e.router.on("route:updated",this.updateRoute),this.on("unmount",function(){e.router.off("route:updated",this.updateRoute),this.unmountTag()}.bind(this)),this.on("mount",function(){this.updateRoute()}.bind(this))});var O=new f;O.Route=y,O.DefaultRoute=b,O.RedirectRoute=m,O.NotFoundRoute=g,O._={Response:R,Request:k},O.config={updatable:!1},e.router=O,t.exports=O})},function(e,r){e.exports=t},function(t,e){"use strict";var r=Object.prototype.hasOwnProperty,n=Object.prototype.toString,i=function(t){return"function"==typeof Array.isArray?Array.isArray(t):"[object Array]"===n.call(t)},o=function(t){if(!t||"[object Object]"!==n.call(t))return!1;var e=r.call(t,"constructor"),i=t.constructor&&t.constructor.prototype&&r.call(t.constructor.prototype,"isPrototypeOf");if(t.constructor&&!e&&!i)return!1;var o;for(o in t);return"undefined"==typeof o||r.call(t,o)};t.exports=function u(){var t,e,r,n,s,a,c=arguments[0],h=1,f=arguments.length,p=!1;for("boolean"==typeof c?(p=c,c=arguments[1]||{},h=2):("object"!=typeof c&&"function"!=typeof c||null==c)&&(c={});h<f;++h)if(t=arguments[h],null!=t)for(e in t)r=c[e],n=t[e],c!==n&&(p&&n&&(o(n)||(s=i(n)))?(s?(s=!1,a=r&&i(r)?r:[]):a=r&&o(r)?r:{},c[e]=u(p,a,n)):"undefined"!=typeof n&&(c[e]=n));return c}}])});
 
 },{"riot":2}],2:[function(require,module,exports){
-/* Riot v2.5.0, @license MIT */
+/* Riot v2.6.0, @license MIT */
 
 ;(function(window, undefined) {
   'use strict';
-var riot = { version: 'v2.5.0', settings: {} },
+var riot = { version: 'v2.6.0', settings: {} },
   // be aware, internal usage
   // ATTENTION: prefix the global dynamic variables with `__`
 
@@ -32,6 +32,8 @@ var riot = { version: 'v2.5.0', settings: {} },
   T_OBJECT = 'object',
   T_UNDEF  = 'undefined',
   T_FUNCTION = 'function',
+  XLINK_NS = 'http://www.w3.org/1999/xlink',
+  XLINK_REGEX = /^xlink:(\w+)/,
   // special native tags that cannot be treated like the others
   SPECIAL_TAGS_REGEX = /^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?|opt(?:ion|group))$/,
   RESERVED_WORDS_BLACKLIST = /^(?:_(?:item|id|parent)|update|root|(?:un)?mount|mixin|is(?:Mounted|Loop)|tags|parent|opts|trigger|o(?:n|ff|ne))$/,
@@ -69,11 +71,10 @@ riot.observable = function(el) {
    * @param   {Function}   fn - callback
    */
   function onEachEvent(e, fn) {
-    var es = e.split(' '), l = es.length, i = 0, name, indx
+    var es = e.split(' '), l = es.length, i = 0
     for (; i < l; i++) {
-      name = es[i]
-      indx = name.indexOf('.')
-      if (name) fn( ~indx ? name.substring(0, indx) : name, i, ~indx ? name.slice(indx + 1) : null)
+      var name = es[i]
+      if (name) fn(name, i)
     }
   }
 
@@ -94,10 +95,9 @@ riot.observable = function(el) {
       value: function(events, fn) {
         if (typeof fn != 'function')  return el
 
-        onEachEvent(events, function(name, pos, ns) {
+        onEachEvent(events, function(name, pos) {
           (callbacks[name] = callbacks[name] || []).push(fn)
           fn.typed = pos > 0
-          fn.ns = ns
         })
 
         return el
@@ -117,11 +117,11 @@ riot.observable = function(el) {
       value: function(events, fn) {
         if (events == '*' && !fn) callbacks = {}
         else {
-          onEachEvent(events, function(name, pos, ns) {
-            if (fn || ns) {
+          onEachEvent(events, function(name, pos) {
+            if (fn) {
               var arr = callbacks[name]
               for (var i = 0, cb; cb = arr && arr[i]; ++i) {
-                if (cb == fn || ns && cb.ns == ns) arr.splice(i--, 1)
+                if (cb == fn) arr.splice(i--, 1)
               }
             } else delete callbacks[name]
           })
@@ -171,14 +171,14 @@ riot.observable = function(el) {
           args[i] = arguments[i + 1] // skip first argument
         }
 
-        onEachEvent(events, function(name, pos, ns) {
+        onEachEvent(events, function(name, pos) {
 
           fns = slice.call(callbacks[name] || [], 0)
 
           for (var i = 0, fn; fn = fns[i]; ++i) {
             if (fn.busy) continue
             fn.busy = 1
-            if (!ns || fn.ns == ns) fn.apply(el, fn.typed ? [name].concat(args) : args)
+            fn.apply(el, fn.typed ? [name].concat(args) : args)
             if (fns[i] !== fn) { i-- }
             fn.busy = 0
           }
@@ -318,7 +318,7 @@ function getPathFromBase(href) {
 
 function emit(force) {
   // the stack is needed for redirections
-  var isRoot = emitStackLevel == 0
+  var isRoot = emitStackLevel == 0, first
   if (MAX_EMIT_STACK_LEVEL <= emitStackLevel) return
 
   emitStackLevel++
@@ -330,10 +330,7 @@ function emit(force) {
     }
   })
   if (isRoot) {
-    while (emitStack.length) {
-      emitStack[0]()
-      emitStack.shift()
-    }
+    while (first = emitStack.shift()) first() // stack increses within this call
     emitStackLevel = 0
   }
 }
@@ -356,13 +353,13 @@ function click(e) {
     || el.href.indexOf(loc.href.match(RE_ORIGIN)[0]) == -1 // cross origin
   ) return
 
-  if (el.href != loc.href) {
-    if (
+  if (el.href != loc.href
+    && (
       el.href.split('#')[0] == loc.href.split('#')[0] // internal jump
-      || base != '#' && getPathFromRoot(el.href).indexOf(base) !== 0 // outside of base
+      || base[0] != '#' && getPathFromRoot(el.href).indexOf(base) !== 0 // outside of base
+      || base[0] == '#' && el.href.split(base)[0] != loc.href.split(base)[0] // outside of #base
       || !go(getPathFromBase(el.href), el.title || doc.title) // route not found
-    ) return
-  }
+    )) return
 
   e.preventDefault()
 }
@@ -375,22 +372,20 @@ function click(e) {
  * @returns {boolean} - route not found flag
  */
 function go(path, title, shouldReplace) {
-  if (hist) { // if a browser
-    path = base + normalize(path)
-    title = title || doc.title
-    // browsers ignores the second parameter `title`
-    shouldReplace
-      ? hist.replaceState(null, title, path)
-      : hist.pushState(null, title, path)
-    // so we need to set it manually
-    doc.title = title
-    routeFound = false
-    emit()
-    return routeFound
-  }
-
   // Server-side usage: directly execute handlers for the path
-  return central[TRIGGER]('emit', getPathFromBase(path))
+  if (!hist) return central[TRIGGER]('emit', getPathFromBase(path))
+
+  path = base + normalize(path)
+  title = title || doc.title
+  // browsers ignores the second parameter `title`
+  shouldReplace
+    ? hist.replaceState(null, title, path)
+    : hist.pushState(null, title, path)
+  // so we need to set it manually
+  doc.title = title
+  routeFound = false
+  emit()
+  return routeFound
 }
 
 /**
@@ -542,7 +537,7 @@ riot.route = route
 
 /**
  * The riot template engine
- * @version v2.4.0
+ * @version v2.4.1
  */
 /**
  * riot.util.brackets
@@ -565,6 +560,10 @@ var brackets = (function (UNDEF) {
     S_QBLOCKS = R_STRINGS.source + '|' +
       /(?:\breturn\s+|(?:[$\w\)\]]|\+\+|--)\s*(\/)(?![*\/]))/.source + '|' +
       /\/(?=[^*\/])[^[\/\\]*(?:(?:\[(?:\\.|[^\]\\]*)*\]|\\.)[^[\/\\]*)*?(\/)[gim]*/.source,
+
+    UNSUPPORTED = RegExp('[\\' + 'x00-\\x1F<>a-zA-Z0-9\'",;\\\\]'),
+
+    NEED_ESCAPE = /(?=[[\]()*+?.^$|])/g,
 
     FINDBRACES = {
       '(': RegExp('([()])|'   + S_QBLOCKS, REGLOB),
@@ -606,10 +605,10 @@ var brackets = (function (UNDEF) {
 
     var arr = pair.split(' ')
 
-    if (arr.length !== 2 || /[\x00-\x1F<>a-zA-Z0-9'",;\\]/.test(pair)) { // eslint-disable-line
+    if (arr.length !== 2 || UNSUPPORTED.test(pair)) {
       throw new Error('Unsupported brackets "' + pair + '"')
     }
-    arr = arr.concat(pair.replace(/(?=[[\]()*+?.^$|])/g, '\\').split(' '))
+    arr = arr.concat(pair.replace(NEED_ESCAPE, '\\').split(' '))
 
     arr[4] = _rewrite(arr[1].length > 1 ? /{[\S\s]*?}/ : _pairs[4], arr)
     arr[5] = _rewrite(pair.length > 3 ? /\\({|})/g : _pairs[5], arr)
@@ -769,6 +768,9 @@ var tmpl = (function () {
 
   _tmpl.loopKeys = brackets.loopKeys
 
+  // istanbul ignore next
+  _tmpl.clearCache = function () { _cache = {} }
+
   _tmpl.errorHandler = null
 
   function _logErr (err, ctx) {
@@ -788,10 +790,7 @@ var tmpl = (function () {
 
     if (expr.slice(0, 11) !== 'try{return ') expr = 'return ' + expr
 
-/* eslint-disable */
-
-    return new Function('E', expr + ';')
-/* eslint-enable */
+    return new Function('E', expr + ';')    // eslint-disable-line no-new-func
   }
 
   var
@@ -911,7 +910,7 @@ var tmpl = (function () {
   // istanbul ignore next: not both
   var // eslint-disable-next-line max-len
     JS_CONTEXT = '"in this?this:' + (typeof window !== 'object' ? 'global' : 'window') + ').',
-    JS_VARNAME = /[,{][$\w]+:|(^ *|[^$\w\.])(?!(?:typeof|true|false|null|undefined|in|instanceof|is(?:Finite|NaN)|void|NaN|new|Date|RegExp|Math)(?![$\w]))([$_A-Za-z][$\w]*)/g,
+    JS_VARNAME = /[,{][$\w]+(?=:)|(^ *|[^$\w\.])(?!(?:typeof|true|false|null|undefined|in|instanceof|is(?:Finite|NaN)|void|NaN|new|Date|RegExp|Math)(?![$\w]))([$_A-Za-z][$\w]*)/g,
     JS_NOPROPS = /^(?=(\.[$\w]+))\1(?:[^.[(]|$)/
 
   function _wrapExpr (expr, asText, key) {
@@ -951,10 +950,7 @@ var tmpl = (function () {
     return expr
   }
 
-  // istanbul ignore next: compatibility fix for beta versions
-  _tmpl.parse = function (s) { return s }
-
-  _tmpl.version = brackets.version = 'v2.4.0'
+  _tmpl.version = brackets.version = 'v2.4.1'
 
   return _tmpl
 
@@ -1266,7 +1262,7 @@ function _each(dom, parent, expr) {
         // update the DOM
         if (isVirtual)
           moveVirtual(tag, root, tags[i], dom.childNodes.length)
-        else root.insertBefore(tag.root, tags[i].root)
+        else if (tags[i].root.parentNode) root.insertBefore(tag.root, tags[i].root)
         // update the position attribute if it exists
         if (expr.pos)
           tag[expr.pos] = i
@@ -1510,16 +1506,16 @@ function Tag(impl, conf, innerHTML) {
     }
   }
 
-  function inheritFromParent () {
-    if (!self.parent || !isLoop) return
-    each(Object.keys(self.parent), function(k) {
+  function inheritFrom(target) {
+    each(Object.keys(target), function(k) {
       // some properties must be always in sync with the parent tag
       var mustSync = !RESERVED_WORDS_BLACKLIST.test(k) && contains(propsInSyncWithParent, k)
+
       if (typeof self[k] === T_UNDEF || mustSync) {
         // track the property to keep in sync
         // so we can keep it updated
         if (!mustSync) propsInSyncWithParent.push(k)
-        self[k] = self.parent[k]
+        self[k] = target[k]
       }
     })
   }
@@ -1535,8 +1531,10 @@ function Tag(impl, conf, innerHTML) {
     // make sure the data passed will not override
     // the component core methods
     data = cleanUpData(data)
-    // inherit properties from the parent
-    inheritFromParent()
+    // inherit properties from the parent in loop
+    if (isLoop) {
+      inheritFrom(self.parent)
+    }
     // normalize the tag properties in case an item object was initially passed
     if (data && isObject(item)) {
       normalizeData(data)
@@ -1580,11 +1578,21 @@ function Tag(impl, conf, innerHTML) {
       // loop the keys in the function prototype or the all object keys
       each(props, function(key) {
         // bind methods to self
-        if (key != 'init' && !self[key])
+        // allow mixins to override other properties/parent mixins
+        if (key != 'init') {
+          // check for getters/setters
+          var descriptor = Object.getOwnPropertyDescriptor(instance, key)
+          var hasGetterSetter = descriptor && (descriptor.get || descriptor.set)
+
           // apply method only if it does not already exist on the instance
-          self[key] = isFunction(instance[key]) ?
-            instance[key].bind(self) :
-            instance[key]
+          if (!self.hasOwnProperty(key) && hasGetterSetter) {
+            Object.defineProperty(self, key, descriptor)
+          } else {
+            self[key] = isFunction(instance[key]) ?
+              instance[key].bind(self) :
+              instance[key]
+          }
+        }
       })
 
       // init method will be called automatically
@@ -1599,10 +1607,16 @@ function Tag(impl, conf, innerHTML) {
 
     // add global mixins
     var globalMixin = riot.mixin(GLOBAL_MIXIN)
+
     if (globalMixin)
       for (var i in globalMixin)
         if (globalMixin.hasOwnProperty(i))
           self.mixin(globalMixin[i])
+
+    // children in loop should inherit from true parent
+    if (self._parent) {
+      inheritFrom(self._parent)
+    }
 
     // initialiation
     if (impl.fn) impl.fn.call(self, opts)
@@ -1843,7 +1857,7 @@ function update(expressions, tag) {
 
     // ~~#1612: look for changes in dom.value when updating the value~~
     if (attrName === 'value') {
-      dom.value = value
+      if (dom.value != value) dom.value = value
       return
     }
 
@@ -2017,13 +2031,17 @@ function getAttr(dom, name) {
 }
 
 /**
- * Set any DOM attribute
+ * Set any DOM/SVG attribute
  * @param { Object } dom - DOM node we want to update
  * @param { String } name - name of the property we want to set
  * @param { String } val - value of the property we want to set
  */
 function setAttr(dom, name, val) {
-  dom.setAttribute(name, val)
+  var xlink = XLINK_REGEX.exec(name)
+  if (xlink && xlink[1])
+    dom.setAttributeNS(XLINK_NS, xlink[1], val)
+  else
+    dom.setAttribute(name, val)
 }
 
 /**
